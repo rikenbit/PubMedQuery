@@ -38,9 +38,36 @@
 </head>
 <body>
     <div id="content">
-        <h1>PageSlide Basic Demo</h1>
-        <p>Below are a couple examples of how the plugin works:</p>
-        <ul>
+    <h1>Interface of PubMedQuery</h1>
+    <p>
+        <a class="fancybox-thumbs" data-fancybox-group="thumb" href="4_b.jpg"><img src="4_s.jpg" alt="" /></a>
+
+        <a class="fancybox-thumbs" data-fancybox-group="thumb" href="3_b.jpg"><img src="3_s.jpg" alt="" /></a>
+
+        <a class="fancybox-thumbs" data-fancybox-group="thumb" href="2_b.jpg"><img src="2_s.jpg" alt="" /></a>
+
+        <a class="fancybox-thumbs" data-fancybox-group="thumb" href="1_b.jpg"><img src="1_s.jpg" alt="" /></a>
+        <a class="fancybox-thumbs" data-fancybox-group="thumb" href="4_b.jpg"><img src="4_s.jpg" alt="" /></a>
+
+        <a class="fancybox-thumbs" data-fancybox-group="thumb" href="3_b.jpg"><img src="3_s.jpg" alt="" /></a>
+
+        <a class="fancybox-thumbs" data-fancybox-group="thumb" href="2_b.jpg"><img src="2_s.jpg" alt="" /></a>
+
+        <a class="fancybox-thumbs" data-fancybox-group="thumb" href="1_b.jpg"><img src="1_s.jpg" alt="" /></a>
+        <a class="fancybox-thumbs" data-fancybox-group="thumb" href="4_b.jpg"><img src="4_s.jpg" alt="" /></a>
+
+        <a class="fancybox-thumbs" data-fancybox-group="thumb" href="3_b.jpg"><img src="3_s.jpg" alt="" /></a>
+
+        <a class="fancybox-thumbs" data-fancybox-group="thumb" href="2_b.jpg"><img src="2_s.jpg" alt="" /></a>
+
+        <a class="fancybox-thumbs" data-fancybox-group="thumb" href="1_b.jpg"><img src="1_s.jpg" alt="" /></a>
+        <a class="fancybox-thumbs" data-fancybox-group="thumb" href="4_b.jpg"><img src="4_s.jpg" alt="" /></a>
+
+        <a class="fancybox-thumbs" data-fancybox-group="thumb" href="3_b.jpg"><img src="3_s.jpg" alt="" /></a>
+
+        <a class="fancybox-thumbs" data-fancybox-group="thumb" href="2_b.jpg"><img src="2_s.jpg" alt="" /></a>
+
+        <a class="fancybox-thumbs" data-fancybox-group="thumb" href="1_b.jpg"><img src="1_s.jpg" alt="" /></a>        </p>
             <li>
                 <a href="_secondary.html" class="first">Slide to the right, and load content from a secondary page.</a>
             </li>
@@ -49,12 +76,37 @@
     </div>
     <script src="PageSlide/lib/jquery-1.7.1.min.js"></script>
     <script src="PageSlide/jquery.pageslide.min.js"></script>
+    <!-- Add fancyBox main JS and CSS files -->
+    <script type="text/javascript" src="FancyBox/source/jquery.fancybox.js?v=2.1.5"></script>
+    <link rel="stylesheet" type="text/css" href="FancyBox/source/jquery.fancybox.css?v=2.1.5" media="screen" />
+    <!-- Add Thumbnail helper (this is optional) -->
+    <link rel="stylesheet" type="text/css" href="FancyBox/source/helpers/jquery.fancybox-thumbs.css?v=1.0.7" />
+    <script type="text/javascript" src="FancyBox/source/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+
+
     <script>
         /* Default pageslide, moves to the right */
         $(".first").pageslide();
         
         /* Slide to the left, and make it model (you'll have to call $.pageslide.close() to close) */
         $(".second").pageslide({ direction: "left", modal: true });
+    </script>
+    <script>
+                $('.fancybox-thumbs').fancybox({
+                prevEffect : 'none',
+                nextEffect : 'none',
+
+                closeBtn  : false,
+                arrows    : false,
+                nextClick : true,
+
+                helpers : {
+                    thumbs : {
+                        width  : 50,
+                        height : 50
+                    }
+                }
+            });
     </script>
 </body>
 </html>

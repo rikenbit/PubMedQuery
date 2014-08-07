@@ -1,0 +1,460 @@
+%% LyX 1.6.9 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=3cm,lmargin=3cm,rmargin=3cm,headheight=1cm,headsep=1cm,footskip=2cm}
+\usepackage{color}
+\usepackage{babel}
+
+\usepackage{amstext}
+\usepackage[unicode=true]
+ {hyperref}
+\usepackage{breakurl}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\newcommand{\lyxaddress}[1]{
+\par {\raggedright #1
+\vspace{1.4em}
+\noindent\par}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\newcommand{\Rcode}[1]{{\texttt{#1}}}
+\newcommand{\Robject}[1]{{\texttt{#1}}}
+\newcommand{\Rcommand}[1]{{\texttt{#1}}}
+\newcommand{\Rfunction}[1]{{\texttt{#1}}}
+\newcommand{\Rfunarg}[1]{{\textit{#1}}}
+\newcommand{\Rpackage}[1]{{\textit{#1}}}
+\newcommand{\Rmethod}[1]{{\textit{#1}}}
+\newcommand{\Rclass}[1]{{\textit{#1}}}
+
+% Meta information - fill between {} and do not remove %
+% \VignetteIndexEntry{An R Package for retrieving data from EnVision into R objects. }
+% \VignetteDepends{rJava, XML, utils}
+% \VignetteKeywords{}
+% \VignettePackage{ENVISIONQuery}
+
+\makeatother
+
+\begin{document}
+
+\title{The ENVISIONQuery package in BioConductor: Retrieving data through
+the Enfin-Encore annotation portal.}
+
+
+\author{Alex Lisovich$^{\text{1}}$, Roger Day$^{\text{1,2}}$}
+
+
+\date{April 19, 2011}
+
+\maketitle
+
+\lyxaddress{$^{\text{1}}$Department of Biomedical Informatics, $^{\text{2}}$Department
+of Biostatistics \\
+University of Pittsburgh}
+
+
+\section{Overview}
+
+The Enfin-Encore (EnCore) is the integration platform for the ENFIN
+European Network of Excellence {[}1{]}, which provides a portal to
+various database resources with a special focus on systems biology
+( \href{http://code.google.com/p/enfin-co}{http://code.google.com/p/enfin-co}re/).
+EnCore is appealing to developers of bioinformatics applications,
+because of the scope and variety of EnCore's annotation resources,
+and because its collection of web services$^{*}$ utilizes a common
+standard format (EnXML: \href{http://code.google.com/p/enfin-core/wiki/wp1_encore_enxml}{http://code.google.com/p/enfin-core/wiki/wp1\_{}encore\_{}enxml}).
+Web services can communicate client applications using a variety of
+programming languages. Many bioinformaticians work in R, so an R-based
+solution is desirable. 
+
+The ENVISIONQuery package provides programmatic access to the EnCore
+web services in R. EnCore's capabilities evolve rapidly, so the architecture
+of ENVISIONQuery enables rapid integration of the new services when
+they appear.\\
+\\
+$^{*}$\textbf{IMPORTANT NOTE: The Java Web Services utilized
+by the package require Java 1.6 or higher to be installed, otherwise
+the package installation will fail giving the warning abot the wrong
+Java version.}
+
+
+\section{Design considerations}
+
+
+\subsection{Motivating setting}
+
+Our group studied differential expression between endometrial cancer
+tissues with normal tissues. We received an Orbitrap proteomic mass
+spectrometry experiment that generated over 12,000 protein UNIPROT
+identifiers, as well as an Affymetrix U133 Plus 2 microarray experiment
+on the same samples. The analysis required mapping UNIPROT identifiers
+to Affymetrix probe-sets, intending to produce an integrated view
+of expression at protein and transcript levels tied to the same gene.
+We examined several strategies for accomplishing this mapping. We
+found evidence that utilizing Enfin-Encore services is at minimum
+competitive, and possibly superior to other approaches {[}2{]}. 
+
+Initially, the motivation ENVISIONQuery was speifically to automate
+the retrieval of ID mapping information. Later, it became evident
+that a broad approach would make a wide range of Enfin-Encore services
+available to R users. Moreover, the Enfin-Encore architecture allows
+one to combine queries into the pipelines, using the given query results
+as an input for the next query utilizing the unified EnXML data format.
+Consequently, the scope of the ENVISIONQuery package expanded to cover
+additional services provided by the Enfin-Encore portal, the final
+goal being to cover the whole range of services which the Enfin-Encore
+online front ends, EnVision and EnVision2 provide. 
+
+\textcolor{black}{The ENVISIONQuery is a second (the first being the
+DAVIDQuery) in a series of packages devoted to ID mapping related
+information retrieval and performance analysis. At the moment our
+group is preparing two more packages for submission to BioConductor:
+the IdMappingAnalysis package for ID mapping performance analysis
+and the IdMappingRetrieval package providing a unified framework for
+ID mapping related information retrieval from various online services
+for further analysis by the IdMappingAnalysis package. DAVIDQuery
+and ENVISIONQuery are utilized by the IdMappingRetrieval package. }
+
+
+\subsection{Comparison to biomaRt}
+
+The biomaRt package available from BioConductor is an extremely powerful
+tool covering a wide range of data types and sources. On the other
+hand, the Enfin Encore (and ENVISIONQuery), though at an early stage
+of development, provides access to some types of data that not covered
+by biomaRt, the IntAct and PICR being the examples (see section 5).
+Thus, we believe ENVISIONQuery would nicely complement biomaRt. 
+
+When we began the integration study described above, biomaRt did not
+actively support UNIPROT. For this reason, we explored other solutions,
+leading us to use the Enfin Encore online interactive front end (EnVisio\textcolor{black}{n).
+Recently, we returned to biomaRt, comparing its results with Enfin
+Encore in mapping Affymetrix probeset IDs to UNIPROT Accessions. }Despite
+the fact that both systems access presumably the same Biomart (\href{http://www.biomart.org}{www.biomart.org})
+data source through the Ensembl (\href{http://www.ensembl.org}{www.ensembl.org}),
+the results were somewhat different. For the HG U133 Plus 2 micro
+array, either biomaRt or ENVISIONQuery returned UNIPROT Accession
+matches for 32438 probesets. Of those probesets, 70\% of the returned
+UNIPROT lists were identical, for 28\% the lists overlapped but were
+not identical, and for 2\% only one of the two methods returned a
+UNIPROT accession. The Enfin Encore team informed us that there is
+more than one instance of the Biomart data source underlying database,
+and that Ensembl and Enfin Encore ID mapping service access different
+on\textcolor{black}{es. We are not certain which service is more accurate.}
+
+It should be noted that EnXML file format imposes a significant performance
+penalty on the query system due to high percent of redundant information
+contained within the xml text file. In our experience, the EnXML file
+is 10 to 20 times larger than the comparable csv-format file which
+biomaRt returns, with comparable ratio for time expended. Therefore,
+large queries should probably use biomaRt, if the discrepancies described
+above are of little concern. Otherwise, our recommendation is to use
+the ENVISIONQuery when the query size is small enough (up to a few
+hundred input IDs), or when the service desired is not supported by
+biomaRt.
+
+
+\subsection{ENVISIONQuery and Java Web Services}
+
+As mentioned above, the Encore platform is implemented in  Java as
+a collection of Web Services, and therefore, the most robust way to
+integrate it into the custom application would be to use the language
+supporting the web service paradigm. In fact, the EnCore team recommends
+using Java in client applications and provides extensive support to
+facilitate this style of development. From the other hand, R does
+not have such capabilities. To overcome this limitation, the package
+is subdivided in two distinctive subsystems: the Java library providing
+the set of classes serving as wrappers for EnCore web services and
+the R counterpart communicating with Java using the rJava package
+available from CRAN and providing the package high level functionality
+including user interaction, preparing data for online submission,
+formatting the raw EnXML data, filtering data on a set of constraints
+etc. Each web service implemented within Java is registered in R during
+the package initialization in a special data structure which contains
+the information on how to access the Java methods, what services are
+available, what tools and options can be used for a particular service,
+as well as additional information allowing to interactively define
+the processing details as necessary. As a result, adding an additional
+EnCore service is a straightforward process involving adding a Web
+Service into the Java library (any major Java IDE like Eclipse or
+NetBeans has a built-in support for this), implementing a wrapper
+suitable for call from R through rJava and updating the package initialization
+function to include the newly developed service. Provided the conversion
+of the EnXML file into the R data frame is straightforward (being
+the case for majority of services), the effort of adding the new functionality
+is reduced and the whole process the package updating and maintenance
+gets simplified. 
+
+
+\section{Types of identifiers, services and reports}
+
+As of this version, the ENVISIONQuery there are following important
+attributes in the package query syntax. The \Robject{"ids"} attribute
+determines the set of identifiers about which information is to be
+retrieved. It could be either a character vector of IDs (UNIPROT or
+Affymetrix probeset IDs as an example) or EnXML compliant text in
+the form of either character string or file. The \Robject{"typeName"}determines
+the type of input identifier set. The \Robject{"serviceName"}defines
+the type of service from which information should be retrieved, and
+\Robject{"toolName"}defines the tool to be used within the particular
+service. The \Robject{"options"} attribute defines any additional
+query parameters (maximum number of pathways for Reactome service
+being an example) while the \Robject{"filter"} attribute defines
+the additional filtering to be applied to the formatted results (
+organism species, micro array platform etc.). A summary of ENVISIONQuery
+currently supported functionality is given in a Table 1.\\
+\\
+\\
+%
+\begin{table}[h]
+\caption{Services Summary}
+
+
+\begin{tabular}{|c|c|c|c|}
+\hline 
+\textbf{Service} & \textbf{Tools} & \textbf{Description} & \textbf{Source}\tabularnewline
+\hline
+ID  & Affy2Uniprot, & Convert Affy probeset to UNIPROT & Ensembl \tabularnewline
+Conversion & Uniprot2Affy$^{\text{1}}$ & Convert UNIPROT to Affy probeset & \href{http://www.ensembl.org}{www.ensembl.org}\tabularnewline
+\hline
+Intact & FindPartners & Find protein-protein interaction & EMBL-EBI \tabularnewline
+ &  & (UNIPROT) & \href{http://www.ebi.ac.uk/intact}{www.ebi.ac.uk/intact}\tabularnewline
+\hline 
+Picr & mapProteinsAdv & Map protein identifiers between  & EMBL-EBI\tabularnewline
+ &  & various DBs$^{\text{2}}$ & \href{http://www.ebi.ac.uk/Tools/picr}{www.ebi.ac.uk/Tools/picr}\tabularnewline
+\hline 
+Reactome  & FindPathAdv & Finds pathways for specified proteins & Reactome \tabularnewline
+ &  &  & \href{http://www.reactome.org}{www.reactome.org}\tabularnewline
+\hline
+\end{tabular}%
+\end{table}
+
+
+$^{\text{1}}$As of the end of January 2011 this service is temporarily
+unavailable. The development team has assured that it will be operational
+by the end of February 2011.
+
+$^{\text{2}}$The list of supported databases and their identifiers
+can be found at the bottom of the following page: \href{http://www.ebi.ac.uk/Tools/picr/WSDLDocumentation.do}{http://www.ebi.ac.uk/Tools/picr/WSDLDocumentation.do}.\\
+\\
+
+
+For detailed description of services as well as options supported
+for a particular service please use the links provided in Table 2. 
+
+%
+\begin{table}[h]
+
+
+\caption{Service references}
+
+
+\begin{tabular}{|c|c|}
+\hline 
+Service & Documentation URL\tabularnewline
+\hline
+ID Conversion & \href{http://code.google.com/p/enfin-core/wiki/wp1_encore_webservices_affy2uniprot}{http://code.google.com/p/enfin-core/wiki/wp1\_{}encore\_{}webservices\_{}affy2uniprot}\tabularnewline
+\hline 
+Intact & \href{http://www.enfin.org/encore/wsdl/enfin-intact.wsdl}{http://www.enfin.org/encore/wsdl/enfin-intact.wsdl}
+$^{\text{1}}$\tabularnewline
+\hline 
+Picr & \href{http://code.google.com/p/enfin-core/wiki/wp1_encore_webservices_picr}{http://code.google.com/p/enfin-core/wiki/wp1\_{}encore\_{}webservices\_{}picr}\tabularnewline
+\hline 
+Reactome  & \href{http://code.google.com/p/enfin-core/wiki/wp1_encore_webservices_reactome}{http://code.google.com/p/enfin-core/wiki/wp1\_{}encore\_{}webservices\_{}reactome}\tabularnewline
+\hline
+\end{tabular}%
+\end{table}
+$^{\text{1}}$At the moment, only formal service description is available.
+For informal description, please refer to \href{http://www.ebi.ac.uk/intact}{www.ebi.ac.uk/intact}.
+
+
+\section{Getting started}
+
+
+\subsection{Exploring package capabilities}
+
+The code snippet below shows how to check what services as well as
+tools and options for a given service are supported by \Robject{"ENVISIONQuery"}
+package.
+
+<<chunk1,keep.source=TRUE>>=
+library(ENVISIONQuery);
+#check available services
+getServiceNames();
+#check available tools for a given service
+service<-getService("ID Conversion");
+getToolNames(service);
+#check available input type for a given tool
+service<-getService("Reactome");
+tool<-getTool(service,"FindPathAdv");
+getInputTypes(tool);
+#getAvailable options for a given service
+getServiceOptions("Picr");
+@
+
+
+\subsection{Using basic ENVISIONQuery functionality}
+
+The set of queries below retrieves the formatted information from
+all 4 services supported in current version of the package using the
+default service options and providing the the set of request specific
+IDs as well as service, tool and input type attributes.
+
+<<chunk2,keep.source=TRUE>>=
+#convert the Affy probeset IDs to Uniprot IDs
+res<-ENVISIONQuery(ids=c("1553619_a_at","1552276_a_at","202795_x_at"),
+serviceName="ID Conversion",toolName="Affy2Uniprot",typeName="Affymetrix ID");
+print(res);
+#retrieve the pathways for given Uniprot ID(s)
+res<-ENVISIONQuery(ids="P38398",serviceName="Reactome",typeName="Uniprot ID");
+print(res[1:5,]);
+#retrieve protein-protein interactions
+res<-ENVISIONQuery(ids="P38398",serviceName="Intact",typeName="Uniprot ID");
+print(res[1:5,]);
+#convert EnSembl IDs to Uniprot IDs
+res<-ENVISIONQuery(ids=c("ENSP00000397145","ENSP00000269554"),
+serviceName="Picr",typeName="Protein ID");
+print(res);
+@
+
+
+\subsection{Using Options and Filters}
+
+In order to alter the default service behavior, one needs to supply
+the options and or filter set in the form of the list where item names
+and values define to options/filters types and values. The code snippet
+below illustrates how to:
+\begin{enumerate}
+\item Retrieve the data from PICR service specifying the databases which
+the Uniprot IDs should be mapped to.
+\item Retrieve data from Reactome service adding coverage and total protein
+count for a given pathway to the output.
+\item Convert Affymetrix probeset IDs to Uniprot IDs filtering output on
+micro array type and organism species.
+\end{enumerate}
+<<chunk3,keep.source=TRUE>>=
+#match Uniprot IDs to EnSembl and TrEMBL
+options<-list("enfin-picr-search-database"=c("ENSEMBL_HUMAN","TREMBL"));
+res<-ENVISIONQuery(ids="P38398",options=options,
+serviceName="Picr",typeName="Protein ID");
+print(res);
+#retrieve the pathways for given Uniprot ID(s)sorting them by coverage
+#and calculating the total protein count
+options<-list("enfin-reactome-add-coverage"="true",
+"enfin-reactome-sort-by-coverage"="true");
+res<-ENVISIONQuery(ids="P38398",options=options,
+serviceName="Reactome",typeName="Uniprot ID");
+print(res[1:5,]);
+#convert the Affy probeset IDs to UniProt IDs restricting
+#output by micro array type and organism species
+filter<-list(Microarray.Platform="affy_hg_u133_plus_2",
+organism.species="Homo sapiens");
+res<-ENVISIONQuery(ids=c("1553619_a_at","1552276_a_at","202795_x_at"),
+filter=filter, serviceName="ID Conversion",
+toolName="Affy2Uniprot",typeName="Affymetrix ID");
+print(res);
+@
+
+
+\subsection{Cascading query requests.}
+
+The Enfin Encore architecture allows to use the EnXML output file
+as an input for another service, the resulting EnXML file being superposition
+of all intermediate results. The code snippet below shows how the
+ENVISIONQuery can be used to combine Intact and Reactome service requests
+into a single pipeline. Note, that as of the recent \Robject{"ENVISIONQuery"}
+does not support the formatted output for a cascaded call but we plan
+to provide it in the nearest future. In the meantime, the \Robject{"XML"}
+can be used to explore the resulting EnXML file.
+
+<<chunk4,keep.source=TRUE>>=
+#Intact-Reactome cascaded request for UniProt ID(s).
+IntactReactomeXML<-ENVISIONQuery(ids="P38398",
+serviceName=c("Intact","Reactome"),typeName="Uniprot ID",verbose=TRUE);
+#convert xml text into XMLDocument
+#using XML package for further exploring
+if(!is.null(IntactReactomeXML)){
+xmlDoc<-xmlTreeParse(IntactReactomeXML,useInternalNodes = TRUE, asText=TRUE);
+class(xmlDoc);
+}
+@
+
+
+\subsection{Defining ENVISIONQuery request attributes interactively}
+
+Sometimes it's desirable to specify the service, tool and/or input
+format interactively at the run time. This can be accomplished by
+specifying the {}``menu'' (or omitting the parameter) instead of
+providing a concrete service, tool or input type name as illustrated
+below.
+
+<<chunk5, eval=FALSE,keep.source=TRUE>>=
+filter<-list(Microarray.Platform="affy_hg_u133_plus_2",
+organism.species="Homo sapiens");
+res<-ENVISIONQuery(ids=c("1553619_a_at","1552276_a_at","202795_x_at"),
+filter=filter, serviceName="menu",toolName="menu",typeName="menu"); 
+print(res);
+@
+
+
+\section{Running large queries}
+
+The current version of Enfin Encore services imposes a limitation
+on a number of input identifiers in the query request. To overcome
+this limitation, the ENVISIONQuery call processes data in chunks (using
+ENVISIONQuery.loop and ENVISIONQuery.chunks internally) returning
+the list of EnXML documents in case of unformatted output and merging
+the partial data frames into a single one in case the formatted output
+is requested. Unfortunately, the Enfin Encore documentation does not
+specify the limit on a number of input identifiers and if the limit
+is exceeded, just silently returns the input EnXML document or partial
+(and varying) resulting set. For Affy probeset to Uniprot conversion
+(Affy2Uniprot service) we have determined that the fail-safe chunk
+size is 1000 (default). For other services, the size could be different.
+In case the instability is observed, the chunk size can be altered
+by user. 
+
+
+\section{Session information }
+
+This version of ENVISIONQuery has been developed with R 2.11.0. 
+
+R session information:
+
+<<sessionInfo, results=tex>>=
+toLatex(sessionInfo())
+@
+
+
+\section{Acknowledgments}
+
+We would like to thank Rafael Jimenez from the Enfin EnCore team for
+an enjoyable discussion and the great effort he has put into expanding
+the ID mapping related EnCore web services to better suite our needs.
+We also would like to thank Himanshu Grover, a graduate student in
+Biomedical Informatics at the University of Pittsburgh, for the great
+effort and useful suggestions he has made during the package preparation
+and testing.
+
+
+\section{References}
+
+{[}1{]} Florian Reisinger, Manuel Corpas1, John Hancock, Henning Hermjakob,
+Ewan Birney, and Pascal Kahlem1. ENFIN - An Integrative Structure
+for Systems Biology. Data Integration in the Life Sciences Lecture
+Notes in Computer Science, 2008, Volume 5109/2008, 132-143, DOI: 10.1007/978-3-540-69828-9\_13\\
+{[}2{]} Identifier mapping performance for integrating transcriptomics
+and proteomics experimental results Roger S. Day1, Kevin K. McDade1,
+Uma Chandran1, Alex Lisovich, Thomas Conrads, Brian Hood, V.S.Kumar
+Kolli, David Kirchner, Traci Litzi, G. Larry Maxwell, in submission
+to BMC Bioinformatics 
+\end{document}

@@ -1,0 +1,46 @@
+Here is a start of a list of ideas:
+Please feel free to add to it or to start implementing stuff:
+
+ 1) The file, data/mgu74v2id
+   contains an environment that has the affy number linked to (the 
+  genbank accession number)
+
+   It would be nice to be able to select a set of genes and
+   get a webpage set up with the Affy #, and links to various
+   databases (genbank in particular).
+
+ 2) We need to decide which databases we will store in data:
+    -functional groups
+    -basic mappings
+    -proteins
+    -chromosome mapping
+
+ 3) A set of tools that let us select data from a data frame (such as the 
+  output of dChip) according to the data in these files.
+
+ 4) Do we want to explore a Tcl/Tk interface to selection?
+
+ 5) Need to store the data files compressed (.gz) and then use the appropriate
+    readers. What would be even better would be to have stored binary forms
+    of environments (or memory-mapped environments).
+
+ 6) Now have the ability to load up locus link webpages, but we
+    would like to be able to do keyword searchs and to interpret the
+    results directly in R.
+
+ 7) We need some form of class structure that will allow us to
+   manipulate the objects in a more uniform fashion.
+
+ 8) We need to design the interface so it can be handled either by
+   environments/hash tables or by a database -- either Access or
+   Postgres
+
+---
+some comments after 26 oct meetings
+
+options-like structure (or object-like, e.g., lm.object) for htmlTable
+and htmlPage so that htmlTable( listOfContent, listOfMarkup, tableOptions )
+and htmlPage( listOfContent, listOfMarkup, pageOptions ) have good defaults.
+constraints on content elements of listsOfContent will be needed --
+same number of elements per list element, e.g.  role of the container
+class should be considered

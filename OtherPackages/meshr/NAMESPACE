@@ -1,0 +1,43 @@
+import(methods)
+import(fdrtool)
+import(Category)
+import(MeSH.db)
+import(MeSH.AOR.db)
+import(MeSH.PCR.db)
+import(MeSHDbi)
+import(org.MeSH.Hsa.db)
+import(org.MeSH.Aca.db)
+import(org.MeSH.Atu.K84.db)
+import(org.MeSH.Bsu.168.db)
+import(org.MeSH.Syn.db)
+import(cummeRbund)
+import(org.Hs.eg.db)
+
+importFrom(BiocGenerics, annotation, "annotation<-")
+
+exportClasses(MeSHHyperGParams, MeSHHyperGResult)
+
+exportMethods(## Results
+              "meshHyperGTest",
+              "meshIds",
+              "meshTerms",
+              "meshCategory",
+              "meshAnnotation",
+              "pvalues",
+              "show",
+              "summary", 
+              
+              ## Params
+              "initialize",
+              "geneIds",
+              "universeGeneIds",
+              "universeGeneIds<-",
+              "annotation",
+              "annotation<-",
+              category,
+              "category<-",
+              database,
+              "database<-",
+              "pvalueCutoff",
+              "pAdjust",
+              "makeValidParams")

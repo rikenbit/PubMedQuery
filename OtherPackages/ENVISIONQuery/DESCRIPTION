@@ -1,0 +1,18 @@
+Package: ENVISIONQuery
+Type: Package
+Title: Retrieval from the ENVISION bioinformatics data portal into R
+Version: 1.12.0
+Date: 2013-08-20
+Author: Alex Lisovich, Roger Day
+Maintainer: Alex Lisovich <all67@pitt.edu>, Roger Day <day01@pitt.edu>
+Description: Tools to retrieve data from ENVISION, the Database for
+    Annotation, Visualization and Integrated Discovery portal
+License: GPL-2
+Depends: rJava, XML, utils
+biocViews: Annotation
+LazyLoad: yes
+Collate: 'ENVISIONQuery-package.R' 'ENVISIONQuery.R' 'zzz.R'
+        'ENVISIONServices.R' 'formatEnXML.R' 'formatIdConversion.R'
+        'formatIntact.R' 'formatPicr.R' 'formatReactome.R'
+        'registerServices.R'
+Packaged: 2014-04-12 06:24:31 UTC; biocbuild

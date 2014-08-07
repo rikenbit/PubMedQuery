@@ -1,0 +1,360 @@
+%% LyX 1.6.6.1 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\setlength{\parskip}{\medskipamount}
+\setlength{\parindent}{0pt}
+\usepackage{url}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\usepackage{Sweave}
+\newcommand{\Rcode}[1]{{\texttt{#1}}}
+\newcommand{\Robject}[1]{{\texttt{#1}}}
+\newcommand{\Rcommand}[1]{{\texttt{#1}}}
+\newcommand{\Rfunction}[1]{{\texttt{#1}}}
+\newcommand{\Rfunarg}[1]{{\textit{#1}}}
+\newcommand{\Rpackage}[1]{{\textit{#1}}}
+\newcommand{\Rmethod}[1]{{\textit{#1}}}
+\newcommand{\Rclass}[1]{{\textit{#1}}}
+\newcommand{\lyxaddress}[1]{
+\par {\raggedright #1
+\vspace{1.4em}
+\noindent\par}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+% Meta information - fill between {} and do not remove %
+% \VignetteIndexEntry{An R Package for retrieving data from DAVID into R objects. }
+% \VignetteDepends{RCurl}
+% \VignetteKeywords{}
+% \VignettePackage{DAVIDQuery}
+
+\makeatother
+
+\usepackage{babel}
+
+\begin{document}
+
+\title{The \Rpackage{DAVIDQuery} package in Bioconductor: Retrieving data
+from the DAVID Bioinformatics Resource}
+
+
+\author{Roger S. Day\dag{}\ddag{} , Alex Lisovich\dag{}}
+
+
+\date{June 6, 2010}
+
+\maketitle
+
+\lyxaddress{\dag{}Department of Biomedical Informatics, \ddag{}Department of
+Biostatistics \newline University of Pittsburgh}
+
+
+\section{Introduction}
+
+DAVID (Database for Annotation, Visualization and Integrated Discovery)
+is a bioinformatics resource developed by the National Institute of
+Allergy and Infectious Diseases at Frederick in conjunction with the
+Laboratory of Immunopathogenesis and Bioinformatics (LIB), SAIC Frederick.
+This resource is described as {}``a graph theory evidence-based method
+to agglomerate species-specific gene/protein identifiers the most
+popular resources including NCBI, PIR and Uniprot/SwissProt. It groups
+tens of millions of identifiers into 1.5 million unique protein/gene
+records.'' Further information can be found in published articles
+{[}1{]}{[}2{]}.
+
+As of this time, maintenance of the DAVID resource is supervised by
+Dr. Richard Lempicki. The resource is accessed interactively at \url{http://david.abcc.ncifcrf.gov/}.
+The interactive interface provided there is suitable for many purposes,
+but for a bioinformatician using R an automated procedural solution
+is needed. The convention for executing queries via formation of URL
+attribute-value strings is provided at \url{http://david.abcc.ncifcrf.gov/content.jsp?file=DAVID_API.html}.
+Although this is described as an application program interface (API),
+the desired query result is not directly provided by the immediate
+return page, and two rounds of {}``screen-scraping'' and URL formulation
+are required to retrieve the query results from a program.
+
+In Spring 2010, the DAVID interface changed. This package has been
+modified to work with the new interface. In particular, the {}``Gene
+ID Conversion tool'' was excluded from the new DAVID API and required
+a separate implementation as outlined at the end of the next session.
+
+
+\section{Types of identifiers and reports}
+
+As of this version, there are three important attributes in the URL
+specification. The \Robject{"id"} attribute will hold the proband
+identifiers about which information is to be retrieved. The \Robject{id}
+values are combined in a single string joined by commas. The \Robject{"type"}
+attribute will hold a string indicating the type of the identifiers.
+The list of legitimate values for \Robject{type} has increased from
+15 to 37 and includes the {}``Not sure'' type which causes the DAVID
+system to infer the type based on the ID list content. The choices,
+described as {}``DAVID's recognized gene types'', now are obtained
+directly from the page \url{http://david.abcc.ncifcrf.gov/tools.jsp}. 
+
+The legitimate values for \Robject{type} (excluding {}``Not Sure'')
+are:
+
+\begin{tabular}{|c|c|c|}
+\hline 
+\Robject{AFFYMETRIX\_3PRIME\_IVT\_ID} & \Robject{AFFYMETRIX\_EXON\_GENE\_ID} & \Robject{AFFYMETRIX\_SNP\_ID}\tabularnewline
+\hline 
+\Robject{AGILENT\_CHIP\_ID} & \Robject{AGILENT\_ID} & \Robject{AGILENT\_OLIGO\_ID}\tabularnewline
+\hline 
+\Robject{ENSEMBL\_GENE\_ID} & \Robject{ENSEMBL\_TRANSCRIPT\_ID} & \Robject{ENTREZ\_GENE\_ID}\tabularnewline
+\hline 
+\Robject{FLYBASE\_GENE\_ID} & \Robject{FLYBASE\_TRANSCRIPT\_ID} & \Robject{GENBANK\_ACCESSION}\tabularnewline
+\hline 
+\Robject{GENOMIC\_GI\_ACCESSION} & \Robject{GENPEPT\_ACCESSION} & \Robject{ILLUMINA\_ID}\tabularnewline
+\hline 
+\Robject{IPI\_ID} & \Robject{MGI\_ID} & \Robject{OFFICIAL\_GENE\_SYMBOL}\tabularnewline
+\hline 
+\Robject{PFAM\_ID} & \Robject{PIR\_ID} & \Robject{PROTEIN\_GI\_ACCESSION}\tabularnewline
+\hline 
+\Robject{REFSEQ\_GENOMIC} & \Robject{REFSEQ\_MRNA} & \Robject{REFSEQ\_PROTEIN}\tabularnewline
+\hline 
+\Robject{REFSEQ\_RNA} & \Robject{RGD\_ID} & \Robject{SGD\_ID}\tabularnewline
+\hline 
+\Robject{TAIR\_ID} & \Robject{UCSC\_GENE\_ID} & \Robject{UNIGENE}\tabularnewline
+\hline 
+\Robject{UNIPROT\_ACCESSION} & \Robject{UNIPROT\_ID} & \Robject{UNIREF100\_ID}\tabularnewline
+\hline 
+\Robject{WORMBASE\_GENE\_ID} & \Robject{WORMPEP\_ID} & \Robject{ZFIN\_ID}\tabularnewline
+\hline
+\end{tabular}
+
+The third attribute is \Robject{"tool"}, which refers to the type
+of report to be generated. Values which return useful results are
+the strings \Robject{"gene2gene"}, \Robject{"list"}, \Robject{"geneReport"}
+(the latter two nearly equivalent), \Robject{"annotationReport"},
+and \Robject{"geneReportFull"}. The other choices for \Robject{tool},
+related to DAVID's Functional Annotation tools, generate much more
+complex output and cannot be handled by this package at this time.
+
+A fourth attribute, the \Robject{"annot"} attribute, is relevant
+to the \Robject{"annotationReport"}, tool. It names the additional
+columns to appear in the annotation report. For other tools, \Robject{"annot"}
+does not appear to affect the returned results, and is generally set
+to \Robject{NULL}.
+
+If the query contains \Rcode{tool=list} or \Rcode{tool=geneReport},
+then the result (after formatting) is a three-column character data
+frame. If the query contains \Rcode{tool=geneReportFull}, then the
+result (after formatting) is a list with each element corresponding
+to an identifier in the ID list. If the query contains \Rcode{tool=gene2gene},
+then the result (after formatting) is a list with each element corresponding
+to a functional group selected by a DAVID algorithm. The formats are
+documented in detail in the manual documents for the function \Rfunction{formatDAVIDResult}.
+
+As was mentioned before, the Gene ID Conversion Tool is not included
+into the latest version of API and can be accessed only through the
+online query system. To overcome this limitation, we introduced the
+new tool value, \Robject{"geneIdConversion"}, and implemented the
+conversion by programmatically reproducing the Gene ID Conversion
+Tool workflow as follows. First, the list of IDs to be converted from
+the given ID type is submitted to the DAVID online {}``tools.jsp''
+service using the HTTP message post. Second, the DAVID check 'at least
+80 percent of samples should be mapped' turned off by accessing the
+hidden URL \textquotedbl{}submitAnyway.jsp\textquotedbl{}. This ensures
+that the input ID list can contain any percentage of correct IDs and
+still be mapped properly. Third, the request for ID conversion is
+sent by posting the HTTP message to the DAVID conversion service.
+The resulting page is scrapped, the URL of the conversion result file
+is obtained and the file is retrieved. As the conversion results file
+is a well formatted table represented by a tab delimited .txt file,no
+further formatting of the DAVIDQueryResult is needed. The \Robject{"annot"}
+attribute values in this case are the same as for \Robject{"type"},
+with addition of an extra item, \Robject{DAVID} (the DAVID unique
+gene identifier), and define the type of gene ID conversion to be
+performed.
+
+
+\section{Motivating setting}
+
+Our group received results of a proteomic mass spectrometry experiment
+that generated over 12,000 protein UNIPROT identifiers, and needed
+to compare these results to a microarray experiment that utilized
+the Affymetrix U133 Plus 2 chip. Therefore the 12,000 identifiers
+needed to be mapped as well as possible to Affymetrix probe-sets which
+could confidently be assigned to protein-coding genes. There are numerous
+strategies for accomplishing this mapping, such as utilizing the Affymetrix
+NetAffx resource or NCBI Entrez, but each approach is known to generate
+an occasional incorrect answer. Utilizing DAVID appears to be at minimum
+competitive with the others, and possibly the best approach. 
+
+An early version of \Rfunction{DAVIDQueryLoop} was used to retrieve
+matching probe-sets. These results, together with comparisons to alternative
+mapping methods, are to be reported in a manuscript in preparation.
+This work was initially performed by Kevin McDade at the University
+of Pittsburgh, later automated by us; he is continuing with some related
+innovative sequence-based analysis.
+
+It should be noted that, as of last look, the retrieval of Affymetrix
+probe-set IDs via the DAVID API did not allow for restricting the
+result to a specified chip. Lists of probe-sets by chip name are available
+at DAVID. The function \Rfunction{getAffyProbesetList} is provided
+in this package to retrieve the list for the chip of interest, for
+intersection with lists of probe-sets retrieved from DAVID via \Rfunction{DAVIDQueryLoop}.
+(We caution that there is no guarantee that these probe-set lists
+match comparable lists obtained elsewhere. )
+
+
+\section{Launching a single query}
+
+A single query is accomplished with the function \Rfunction{DAVIDQuery}.
+The mechanics involve formulating a query URI, launching it and retrieving
+identifiers from the returned HTML, formulating and launching a new
+query, retrieving a result file name from the returned HTML, and finally
+retrieving the file itself. Formatting of the final result is the
+default option. (The result file remains on the server for 24 hours.) 
+
+
+\subsection{Structured and unstructured}
+
+A raw HTML character stream is transmitted by DAVID. By default, an
+attempt to structure the results will be made. A structuring function
+is defined for each tool. There is no guarantee that the structuring
+functions will continue to work if or when the formats of the pages
+returned by DAVID change. Also, not all combinations of the query
+arguments have been tested, and there may be combinations of \Robject{ids},
+\Robject{type}, \Robject{annot}, \Robject{tool} for which the tool's
+structuring function does not work correctly. When a look at the raw
+stream is desired, for example if the structuring fails or the result
+is unexpected, then the call can be made with the argument assignment:
+\Rcode{DAVIDQuery(formatIt=FALSE)}. This allows the user to receive
+the raw character table actually returned.
+
+
+\subsection{Examples}
+
+<<chunk1>>= 
+library("DAVIDQuery")
+result = DAVIDQuery(type="UNIPROT_ACCESSION", annot=NULL, tool="geneReportFull")
+names(result)
+
+@
+
+The result has been structured into a list of lists. Printing is suppressed
+due to the size of the output. The code \Rcode{DAVIDQuery(testMe=TRUE)}
+is the equivalent of the DAVIDQuery call above. 
+
+The result of the simpler query using \Rcode{tool="geneReport"} is
+a matrix:
+
+<<chunk2>>=
+Sys.sleep(10)  ### Assure that queries are not too close in time.
+result = DAVIDQuery(type="UNIPROT_ACCESSION", annot=NULL, tool="geneReport")
+result$firstURL
+result$secondURL
+result$downloadURL
+result$DAVIDQueryResult
+
+@
+
+The Gene Functional Classification query is obtained by the query
+clause \Rcode{tool="gene2gene"}. The returned value has a complex
+structure which we attempt to translate into a corresponding R object
+respecting the structure, using the function \Rfunction{formatGene2Gene}. 
+
+<<chunk3>>=
+Sys.sleep(10)  ### Assure that queries are not too close in time.
+result = testGene2Gene(details=FALSE)
+length(result)
+names(result[[1]])
+@
+
+Convenience functions are provided to assist with integrating genomic
+and proteomic data:
+
+<<chunk4>>=
+Sys.sleep(10)  ### Assure that queries are not too close in time.
+affyToUniprot(details=FALSE)
+Sys.sleep(10)  ### Assure that queries are not too close in time.
+uniprotToAffy(details=FALSE)
+@
+
+
+\section{Launching large queries}
+
+To control performance of the DAVID website, and to assure that queries
+launched by the website can be successfully processed, policy limits
+are implemented. When a user needs to retrieve answers which would
+exceed these limits if a single query is attempted, the function \Rfunction{DAVIDQueryLoop}
+can be used. It attempts to slow successive calls and to reduce the
+query size, sufficiently to meet the website policies with a little
+to spare.
+
+
+\section{Limitations}
+
+This package cannot use semantic interoperability, due to the nature
+of DAVID API. This entails risk that future modifications to DAVID
+will cause functions in this package to fail. In fact, this did occur
+in the Spring of 2010, entailing a major refactoring of this package.
+ 
+
+
+\section{Future improvements and adaptations}
+
+We would like to create a package targeted more generally to data
+analysis combining protein expression data with mRNA expression data.
+The main focus, initially at least, will be to provide support for
+mapping between protein identifiers, for example those returned by
+Sequest from mass spectrometry experimental results, and probe-set
+identifiers for microarray chips. Multiple mapping methods will be
+implemented and compared, extending ongoing research in our group. 
+
+Ideally, the information in DAVID would be directly available via
+a grid service. Neither the DAVID team nor we have current plans to
+implement that, but note that Martin Morgan's team working with caBIG
+has developed extensive tools for bridging between R and the caBIG's
+caGRID, using the package \Rpackage{RWebServices} from Bioconductor.
+
+
+\section{Session information }
+
+This version of DAVIDQuery has been developed with R 2.11.0. 
+
+R session information:
+
+<<sessionInfo, results=tex>>=
+toLatex(sessionInfo())
+@
+
+
+\section{Acknowledgements }
+
+Brad Sherman and Da Wei Huang of the DAVID project kindly reviewed
+this package and documentation. Their corrections and encouragement
+were invaluable.
+
+Thanks are due to Drs. Larry Maxwell and Thomas Conrads for provision
+of the data and scientific collaborations that motivated this work,
+Kevin McDade and Uma Chandran for discussions on the identifier-mapping
+problem, and Richard Boyce for careful review of the package and documentation.
+Grant support includes funding from the Gynecologic Diseases Program,
+a collaboration whose bioinformatics components include Walter Reed
+Army Medical Center, University of Pittsburgh, and Windber Research
+Institute. Additional support came from the Telemedicine and Advanced
+Technology Research Center (TATRC).
+
+
+\section{References}
+
+{[}1{]} Huang D.W., Sherman B.T., Tan Q., Kir J., Liu D., Bryant D.,
+Guo Y., Stephens R., Baseler M.W., Lane H.C. et al. (2007) DAVID Bioinformatics
+Resources: expanded annotation database and novel algorithms to better
+extract biology from large gene lists. Nucleic Acids Res., 35, W169-W175.
+
+{[}2{]} Huang D.W., Sherman B.T. and Lempicki R.A. (2008) Systematic
+and integrative analysis of large gene lists using DAVID bioinformatics
+resources. Nat. Protoc., doi: 10.1038/nprot.2008.211.
+\end{document}

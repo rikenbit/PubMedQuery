@@ -1,0 +1,1552 @@
+#LyX 1.6.9 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass literate-article
+\begin_preamble
+\newcommand{\Rcode}[1]{{\texttt{#1}}}
+\newcommand{\Robject}[1]{{\texttt{#1}}}
+\newcommand{\Rcommand}[1]{{\texttt{#1}}}
+\newcommand{\Rfunction}[1]{{\texttt{#1}}}
+\newcommand{\Rfunarg}[1]{{\textit{#1}}}
+\newcommand{\Rpackage}[1]{{\textit{#1}}}
+\newcommand{\Rmethod}[1]{{\textit{#1}}}
+\newcommand{\Rclass}[1]{{\textit{#1}}}
+
+% Meta information - fill between {} and do not remove %
+% \VignetteIndexEntry{An R Package for retrieving data from EnVision into R objects. }
+% \VignetteDepends{rJava, XML, utils}
+% \VignetteKeywords{}
+% \VignettePackage{ENVISIONQuery}
+\end_preamble
+\use_default_options true
+\language english
+\inputencoding auto
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_amsmath 1
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\leftmargin 3cm
+\topmargin 2cm
+\rightmargin 3cm
+\bottommargin 3cm
+\headheight 1cm
+\headsep 1cm
+\footskip 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Title
+The ENVISIONQuery package in BioConductor: Retrieving data through the Enfin-Enc
+ore annotation portal.
+\end_layout
+
+\begin_layout Author
+Alex Lisovich
+\begin_inset Formula $^{\text{1}}$
+\end_inset
+
+, Roger Day
+\begin_inset Formula $^{\text{1,2}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Date
+April 19, 2011
+\end_layout
+
+\begin_layout Address
+\begin_inset Formula $^{\text{1}}$
+\end_inset
+
+Department of Biomedical Informatics, 
+\begin_inset Formula $^{\text{2}}$
+\end_inset
+
+Department of Biostatistics 
+\begin_inset Newline newline
+\end_inset
+
+University of Pittsburgh
+\end_layout
+
+\begin_layout Section
+Overview
+\end_layout
+
+\begin_layout Standard
+The Enfin-Encore (EnCore) is the integration platform for the ENFIN European
+ Network of Excellence [1], which provides a portal to various database
+ resources with a special focus on systems biology ( 
+\begin_inset CommandInset href
+LatexCommand href
+target "http://code.google.com/p/enfin-co"
+
+\end_inset
+
+re/).
+ EnCore is appealing to developers of bioinformatics applications, because
+ of the scope and variety of EnCore's annotation resources, and because
+ its collection of web services
+\begin_inset Formula $^{*}$
+\end_inset
+
+ utilizes a common standard format (EnXML: 
+\begin_inset CommandInset href
+LatexCommand href
+target "http://code.google.com/p/enfin-core/wiki/wp1_encore_enxml"
+
+\end_inset
+
+).
+ Web services can communicate client applications using a variety of programming
+ languages.
+ Many bioinformaticians work in R, so an R-based solution is desirable.
+ 
+\end_layout
+
+\begin_layout Standard
+The ENVISIONQuery package provides programmatic access to the EnCore web
+ services in R.
+ EnCore's capabilities evolve rapidly, so the architecture of ENVISIONQuery
+ enables rapid integration of the new services when they appear.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $^{*}$
+\end_inset
+
+
+\series bold
+IMPORTANT NOTE: The Java Web Services utilized by the package require Java
+ 1.6 or higher to be installed, otherwise the package installation will fail
+ giving the warning abot the wrong Java version.
+\end_layout
+
+\begin_layout Section
+Design considerations
+\end_layout
+
+\begin_layout Subsection
+Motivating setting
+\end_layout
+
+\begin_layout Standard
+Our group studied differential expression between endometrial cancer tissues
+ with normal tissues.
+ We received an Orbitrap proteomic mass spectrometry experiment that generated
+ over 12,000 protein UNIPROT identifiers, as well as an Affymetrix U133
+ Plus 2 microarray experiment on the same samples.
+ The analysis required mapping UNIPROT identifiers to Affymetrix probe-sets,
+ intending to produce an integrated view of expression at protein and transcript
+ levels tied to the same gene.
+ We examined several strategies for accomplishing this mapping.
+ We found evidence that utilizing Enfin-Encore services is at minimum competitiv
+e, and possibly superior to other approaches [2].
+ 
+\end_layout
+
+\begin_layout Standard
+Initially, the motivation ENVISIONQuery was speifically to automate the
+ retrieval of ID mapping information.
+ Later, it became evident that a broad approach would make a wide range
+ of Enfin-Encore services available to R users.
+ Moreover, the Enfin-Encore architecture allows one to combine queries into
+ the pipelines, using the given query results as an input for the next query
+ utilizing the unified EnXML data format.
+ Consequently, the scope of the ENVISIONQuery package expanded to cover
+ additional services provided by the Enfin-Encore portal, the final goal
+ being to cover the whole range of services which the Enfin-Encore online
+ front ends, EnVision and EnVision2 provide.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\color black
+The ENVISIONQuery is a second (the first being the DAVIDQuery) in a series
+ of packages devoted to ID mapping related information retrieval and performance
+ analysis.
+ At the moment our group is preparing two more packages for submission to
+ BioConductor: the IdMappingAnalysis package for ID mapping performance
+ analysis and the IdMappingRetrieval package providing a unified framework
+ for ID mapping related information retrieval from various online services
+ for further analysis by the IdMappingAnalysis package.
+ DAVIDQuery and ENVISIONQuery are utilized by the IdMappingRetrieval package.
+ 
+\end_layout
+
+\begin_layout Subsection
+Comparison to biomaRt
+\end_layout
+
+\begin_layout Standard
+The biomaRt package available from BioConductor is an extremely powerful
+ tool covering a wide range of data types and sources.
+ On the other hand, the Enfin Encore (and ENVISIONQuery), though at an early
+ stage of development, provides access to some types of data that not covered
+ by biomaRt, the IntAct and PICR being the examples (see section 5).
+ Thus, we believe ENVISIONQuery would nicely complement biomaRt.
+ 
+\end_layout
+
+\begin_layout Standard
+When we began the integration study described above, biomaRt did not actively
+ support UNIPROT.
+ For this reason, we explored other solutions, leading us to use the Enfin
+ Encore online interactive front end (EnVisio
+\color black
+n).
+ Recently, we returned to biomaRt, comparing its results with Enfin Encore
+ in mapping Affymetrix probeset IDs to UNIPROT Accessions.
+ 
+\color inherit
+Despite the fact that both systems access presumably the same Biomart (
+\begin_inset CommandInset href
+LatexCommand href
+target "www.biomart.org"
+
+\end_inset
+
+) data source through the Ensembl (
+\begin_inset CommandInset href
+LatexCommand href
+target "www.ensembl.org"
+
+\end_inset
+
+), the results were somewhat different.
+ For the HG U133 Plus 2 micro array, either biomaRt or ENVISIONQuery returned
+ UNIPROT Accession matches for 32438 probesets.
+ Of those probesets, 70% of the returned UNIPROT lists were identical, for
+ 28% the lists overlapped but were not identical, and for 2% only one of
+ the two methods returned a UNIPROT accession.
+ The Enfin Encore team informed us that there is more than one instance
+ of the Biomart data source underlying database, and that Ensembl and Enfin
+ Encore ID mapping service access different on
+\color black
+es.
+ We are not certain which service is more accurate.
+\end_layout
+
+\begin_layout Standard
+It should be noted that EnXML file format imposes a significant performance
+ penalty on the query system due to high percent of redundant information
+ contained within the xml text file.
+ In our experience, the EnXML file is 10 to 20 times larger than the comparable
+ csv-format file which biomaRt returns, with comparable ratio for time expended.
+ Therefore, large queries should probably use biomaRt, if the discrepancies
+ described above are of little concern.
+ Otherwise, our recommendation is to use the ENVISIONQuery when the query
+ size is small enough (up to a few hundred input IDs), or when the service
+ desired is not supported by biomaRt.
+\end_layout
+
+\begin_layout Subsection
+ENVISIONQuery and Java Web Services
+\end_layout
+
+\begin_layout Standard
+As mentioned above, the Encore platform is implemented in  Java as a collection
+ of Web Services, and therefore, the most robust way to integrate it into
+ the custom application would be to use the language supporting the web
+ service paradigm.
+ In fact, the EnCore team recommends using Java in client applications and
+ provides extensive support to facilitate this style of development.
+ From the other hand, R does not have such capabilities.
+ To overcome this limitation, the package is subdivided in two distinctive
+ subsystems: the Java library providing the set of classes serving as wrappers
+ for EnCore web services and the R counterpart communicating with Java using
+ the rJava package available from CRAN and providing the package high level
+ functionality including user interaction, preparing data for online submission,
+ formatting the raw EnXML data, filtering data on a set of constraints etc.
+ Each web service implemented within Java is registered in R during the
+ package initialization in a special data structure which contains the informati
+on on how to access the Java methods, what services are available, what
+ tools and options can be used for a particular service, as well as additional
+ information allowing to interactively define the processing details as
+ necessary.
+ As a result, adding an additional EnCore service is a straightforward process
+ involving adding a Web Service into the Java library (any major Java IDE
+ like Eclipse or NetBeans has a built-in support for this), implementing
+ a wrapper suitable for call from R through rJava and updating the package
+ initialization function to include the newly developed service.
+ Provided the conversion of the EnXML file into the R data frame is straightforw
+ard (being the case for majority of services), the effort of adding the
+ new functionality is reduced and the whole process the package updating
+ and maintenance gets simplified.
+ 
+\end_layout
+
+\begin_layout Section
+Types of identifiers, services and reports
+\end_layout
+
+\begin_layout Standard
+As of this version, the ENVISIONQuery there are following important attributes
+ in the package query syntax.
+ The 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Robject{"ids"}
+\end_layout
+
+\end_inset
+
+ attribute determines the set of identifiers about which information is
+ to be retrieved.
+ It could be either a character vector of IDs (UNIPROT or Affymetrix probeset
+ IDs as an example) or EnXML compliant text in the form of either character
+ string or file.
+ The 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Robject{"typeName"}
+\end_layout
+
+\end_inset
+
+determines the type of input identifier set.
+ The 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Robject{"serviceName"}
+\end_layout
+
+\end_inset
+
+defines the type of service from which information should be retrieved,
+ and 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Robject{"toolName"}
+\end_layout
+
+\end_inset
+
+defines the tool to be used within the particular service.
+ The 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Robject{"options"}
+\end_layout
+
+\end_inset
+
+ attribute defines any additional query parameters (maximum number of pathways
+ for Reactome service being an example) while the 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Robject{"filter"}
+\end_layout
+
+\end_inset
+
+ attribute defines the additional filtering to be applied to the formatted
+ results ( organism species, micro array platform etc.).
+ A summary of ENVISIONQuery currently supported functionality is given in
+ a Table 1.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Float table
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Services Summary
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="9" columns="4">
+<features>
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Service
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Tools
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Description
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Source
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ID 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Affy2Uniprot,
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Convert Affy probeset to UNIPROT
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Ensembl 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Conversion
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Uniprot2Affy
+\begin_inset Formula $^{\text{1}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Convert UNIPROT to Affy probeset
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+target "www.ensembl.org"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Intact
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+FindPartners
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Find protein-protein interaction
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+EMBL-EBI 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+(UNIPROT)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+target "www.ebi.ac.uk/intact"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Picr
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+mapProteinsAdv
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Map protein identifiers between 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+EMBL-EBI
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+various DBs
+\begin_inset Formula $^{\text{2}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+target "www.ebi.ac.uk/Tools/picr"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Reactome 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+FindPathAdv
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Finds pathways for specified proteins
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Reactome 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+target "www.reactome.org"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $^{\text{1}}$
+\end_inset
+
+As of the end of January 2011 this service is temporarily unavailable.
+ The development team has assured that it will be operational by the end
+ of February 2011.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $^{\text{2}}$
+\end_inset
+
+The list of supported databases and their identifiers can be found at the
+ bottom of the following page: 
+\begin_inset CommandInset href
+LatexCommand href
+target "http://www.ebi.ac.uk/Tools/picr/WSDLDocumentation.do"
+
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For detailed description of services as well as options supported for a
+ particular service please use the links provided in Table 2.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Service references
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="2">
+<features>
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Service
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Documentation URL
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ID Conversion
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+target "http://code.google.com/p/enfin-core/wiki/wp1_encore_webservices_affy2uniprot"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Intact
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+target "http://www.enfin.org/encore/wsdl/enfin-intact.wsdl"
+
+\end_inset
+
+ 
+\begin_inset Formula $^{\text{1}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Picr
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+target "http://code.google.com/p/enfin-core/wiki/wp1_encore_webservices_picr"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Reactome 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+target "http://code.google.com/p/enfin-core/wiki/wp1_encore_webservices_reactome"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $^{\text{1}}$
+\end_inset
+
+At the moment, only formal service description is available.
+ For informal description, please refer to 
+\begin_inset CommandInset href
+LatexCommand href
+target "www.ebi.ac.uk/intact"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Getting started
+\end_layout
+
+\begin_layout Subsection
+Exploring package capabilities
+\end_layout
+
+\begin_layout Standard
+The code snippet below shows how to check what services as well as tools
+ and options for a given service are supported by 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Robject{"ENVISIONQuery"}
+\end_layout
+
+\end_inset
+
+ package.
+\end_layout
+
+\begin_layout Scrap
+<<chunk1,keep.source=TRUE>>=
+\begin_inset Newline newline
+\end_inset
+
+library(ENVISIONQuery);
+\begin_inset Newline newline
+\end_inset
+
+#check available services
+\begin_inset Newline newline
+\end_inset
+
+getServiceNames();
+\begin_inset Newline newline
+\end_inset
+
+#check available tools for a given service
+\begin_inset Newline newline
+\end_inset
+
+service<-getService("ID Conversion");
+\begin_inset Newline newline
+\end_inset
+
+getToolNames(service);
+\begin_inset Newline newline
+\end_inset
+
+#check available input type for a given tool
+\begin_inset Newline newline
+\end_inset
+
+service<-getService("Reactome");
+\begin_inset Newline newline
+\end_inset
+
+tool<-getTool(service,"FindPathAdv");
+\begin_inset Newline newline
+\end_inset
+
+getInputTypes(tool);
+\begin_inset Newline newline
+\end_inset
+
+#getAvailable options for a given service
+\begin_inset Newline newline
+\end_inset
+
+getServiceOptions("Picr");
+\begin_inset Newline newline
+\end_inset
+
+@
+\end_layout
+
+\begin_layout Subsection
+Using basic ENVISIONQuery functionality
+\end_layout
+
+\begin_layout Standard
+The set of queries below retrieves the formatted information from all 4
+ services supported in current version of the package using the default
+ service options and providing the the set of request specific IDs as well
+ as service, tool and input type attributes.
+\end_layout
+
+\begin_layout Scrap
+<<chunk2,keep.source=TRUE>>=
+\begin_inset Newline newline
+\end_inset
+
+#convert the Affy probeset IDs to Uniprot IDs
+\begin_inset Newline newline
+\end_inset
+
+res<-ENVISIONQuery(ids=c("1553619_a_at","1552276_a_at","202795_x_at"),
+\begin_inset Newline newline
+\end_inset
+
+serviceName="ID Conversion",toolName="Affy2Uniprot",typeName="Affymetrix
+ ID");
+\begin_inset Newline newline
+\end_inset
+
+print(res);
+\begin_inset Newline newline
+\end_inset
+
+#retrieve the pathways for given Uniprot ID(s)
+\begin_inset Newline newline
+\end_inset
+
+res<-ENVISIONQuery(ids="P38398",serviceName="Reactome",typeName="Uniprot
+ ID");
+\begin_inset Newline newline
+\end_inset
+
+print(res[1:5,]);
+\begin_inset Newline newline
+\end_inset
+
+#retrieve protein-protein interactions
+\begin_inset Newline newline
+\end_inset
+
+res<-ENVISIONQuery(ids="P38398",serviceName="Intact",typeName="Uniprot ID");
+\begin_inset Newline newline
+\end_inset
+
+print(res[1:5,]);
+\begin_inset Newline newline
+\end_inset
+
+#convert EnSembl IDs to Uniprot IDs
+\begin_inset Newline newline
+\end_inset
+
+res<-ENVISIONQuery(ids=c("ENSP00000397145","ENSP00000269554"),
+\begin_inset Newline newline
+\end_inset
+
+serviceName="Picr",typeName="Protein ID");
+\begin_inset Newline newline
+\end_inset
+
+print(res);
+\begin_inset Newline newline
+\end_inset
+
+@
+\end_layout
+
+\begin_layout Subsection
+Using Options and Filters
+\end_layout
+
+\begin_layout Standard
+In order to alter the default service behavior, one needs to supply the
+ options and or filter set in the form of the list where item names and
+ values define to options/filters types and values.
+ The code snippet below illustrates how to:
+\end_layout
+
+\begin_layout Enumerate
+Retrieve the data from PICR service specifying the databases which the Uniprot
+ IDs should be mapped to.
+\end_layout
+
+\begin_layout Enumerate
+Retrieve data from Reactome service adding coverage and total protein count
+ for a given pathway to the output.
+\end_layout
+
+\begin_layout Enumerate
+Convert Affymetrix probeset IDs to Uniprot IDs filtering output on micro
+ array type and organism species.
+\end_layout
+
+\begin_layout Scrap
+<<chunk3,keep.source=TRUE>>=
+\begin_inset Newline newline
+\end_inset
+
+#match Uniprot IDs to EnSembl and TrEMBL
+\begin_inset Newline newline
+\end_inset
+
+options<-list("enfin-picr-search-database"=c("ENSEMBL_HUMAN","TREMBL"));
+\begin_inset Newline newline
+\end_inset
+
+res<-ENVISIONQuery(ids="P38398",options=options,
+\begin_inset Newline newline
+\end_inset
+
+serviceName="Picr",typeName="Protein ID");
+\begin_inset Newline newline
+\end_inset
+
+print(res);
+\begin_inset Newline newline
+\end_inset
+
+#retrieve the pathways for given Uniprot ID(s)sorting them by coverage
+\begin_inset Newline newline
+\end_inset
+
+#and calculating the total protein count
+\begin_inset Newline newline
+\end_inset
+
+options<-list("enfin-reactome-add-coverage"="true",
+\begin_inset Newline newline
+\end_inset
+
+"enfin-reactome-sort-by-coverage"="true");
+\begin_inset Newline newline
+\end_inset
+
+res<-ENVISIONQuery(ids="P38398",options=options,
+\begin_inset Newline newline
+\end_inset
+
+serviceName="Reactome",typeName="Uniprot ID");
+\begin_inset Newline newline
+\end_inset
+
+print(res[1:5,]);
+\begin_inset Newline newline
+\end_inset
+
+#convert the Affy probeset IDs to UniProt IDs restricting
+\begin_inset Newline newline
+\end_inset
+
+#output by micro array type and organism species
+\begin_inset Newline newline
+\end_inset
+
+filter<-list(Microarray.Platform="affy_hg_u133_plus_2",
+\begin_inset Newline newline
+\end_inset
+
+organism.species="Homo sapiens");
+\begin_inset Newline newline
+\end_inset
+
+res<-ENVISIONQuery(ids=c("1553619_a_at","1552276_a_at","202795_x_at"),
+\begin_inset Newline newline
+\end_inset
+
+filter=filter, serviceName="ID Conversion",
+\begin_inset Newline newline
+\end_inset
+
+toolName="Affy2Uniprot",typeName="Affymetrix ID");
+\begin_inset Newline newline
+\end_inset
+
+print(res);
+\begin_inset Newline newline
+\end_inset
+
+@
+\end_layout
+
+\begin_layout Subsection
+Cascading query requests.
+\end_layout
+
+\begin_layout Standard
+The Enfin Encore architecture allows to use the EnXML output file as an
+ input for another service, the resulting EnXML file being superposition
+ of all intermediate results.
+ The code snippet below shows how the ENVISIONQuery can be used to combine
+ Intact and Reactome service requests into a single pipeline.
+ Note, that as of the recent 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Robject{"ENVISIONQuery"}
+\end_layout
+
+\end_inset
+
+ does not support the formatted output for a cascaded call but we plan to
+ provide it in the nearest future.
+ In the meantime, the 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Robject{"XML"}
+\end_layout
+
+\end_inset
+
+ can be used to explore the resulting EnXML file.
+\end_layout
+
+\begin_layout Scrap
+<<chunk4,keep.source=TRUE>>=
+\begin_inset Newline newline
+\end_inset
+
+#Intact-Reactome cascaded request for UniProt ID(s).
+\begin_inset Newline newline
+\end_inset
+
+IntactReactomeXML<-ENVISIONQuery(ids="P38398",
+\begin_inset Newline newline
+\end_inset
+
+serviceName=c("Intact","Reactome"),typeName="Uniprot ID",verbose=TRUE);
+\begin_inset Newline newline
+\end_inset
+
+#convert xml text into XMLDocument
+\begin_inset Newline newline
+\end_inset
+
+#using XML package for further exploring
+\begin_inset Newline newline
+\end_inset
+
+if(!is.null(IntactReactomeXML)){
+\begin_inset Newline newline
+\end_inset
+
+xmlDoc<-xmlTreeParse(IntactReactomeXML,useInternalNodes = TRUE, asText=TRUE);
+\begin_inset Newline newline
+\end_inset
+
+class(xmlDoc);
+\begin_inset Newline newline
+\end_inset
+
+}
+\begin_inset Newline newline
+\end_inset
+
+@
+\end_layout
+
+\begin_layout Subsection
+Defining ENVISIONQuery request attributes interactively
+\end_layout
+
+\begin_layout Standard
+Sometimes it's desirable to specify the service, tool and/or input format
+ interactively at the run time.
+ This can be accomplished by specifying the 
+\begin_inset Quotes eld
+\end_inset
+
+menu
+\begin_inset Quotes erd
+\end_inset
+
+ (or omitting the parameter) instead of providing a concrete service, tool
+ or input type name as illustrated below.
+\end_layout
+
+\begin_layout Scrap
+<<chunk5, eval=FALSE,keep.source=TRUE>>=
+\begin_inset Newline newline
+\end_inset
+
+filter<-list(Microarray.Platform="affy_hg_u133_plus_2",
+\begin_inset Newline newline
+\end_inset
+
+organism.species="Homo sapiens");
+\begin_inset Newline newline
+\end_inset
+
+res<-ENVISIONQuery(ids=c("1553619_a_at","1552276_a_at","202795_x_at"),
+\begin_inset Newline newline
+\end_inset
+
+filter=filter, serviceName="menu",toolName="menu",typeName="menu"); 
+\begin_inset Newline newline
+\end_inset
+
+print(res);
+\begin_inset Newline newline
+\end_inset
+
+@
+\end_layout
+
+\begin_layout Section
+Running large queries
+\end_layout
+
+\begin_layout Standard
+The current version of Enfin Encore services imposes a limitation on a number
+ of input identifiers in the query request.
+ To overcome this limitation, the ENVISIONQuery call processes data in chunks
+ (using ENVISIONQuery.loop and ENVISIONQuery.chunks internally) returning
+ the list of EnXML documents in case of unformatted output and merging the
+ partial data frames into a single one in case the formatted output is requested.
+ Unfortunately, the Enfin Encore documentation does not specify the limit
+ on a number of input identifiers and if the limit is exceeded, just silently
+ returns the input EnXML document or partial (and varying) resulting set.
+ For Affy probeset to Uniprot conversion (Affy2Uniprot service) we have
+ determined that the fail-safe chunk size is 1000 (default).
+ For other services, the size could be different.
+ In case the instability is observed, the chunk size can be altered by user.
+ 
+\end_layout
+
+\begin_layout Section
+Session information 
+\end_layout
+
+\begin_layout Standard
+This version of ENVISIONQuery has been developed with R 2.11.0.
+ 
+\end_layout
+
+\begin_layout Standard
+R session information:
+\end_layout
+
+\begin_layout Scrap
+<<sessionInfo, results=tex>>=
+\begin_inset Newline newline
+\end_inset
+
+toLatex(sessionInfo())
+\begin_inset Newline newline
+\end_inset
+
+@
+\end_layout
+
+\begin_layout Section
+Acknowledgments
+\end_layout
+
+\begin_layout Standard
+We would like to thank Rafael Jimenez from the Enfin EnCore team for an
+ enjoyable discussion and the great effort he has put into expanding the
+ ID mapping related EnCore web services to better suite our needs.
+ We also would like to thank Himanshu Grover, a graduate student in Biomedical
+ Informatics at the University of Pittsburgh, for the great effort and useful
+ suggestions he has made during the package preparation and testing.
+\end_layout
+
+\begin_layout Section
+References
+\end_layout
+
+\begin_layout Standard
+[1] Florian Reisinger, Manuel Corpas1, John Hancock, Henning Hermjakob,
+ Ewan Birney, and Pascal Kahlem1.
+ ENFIN - An Integrative Structure for Systems Biology.
+ Data Integration in the Life Sciences Lecture Notes in Computer Science,
+ 2008, Volume 5109/2008, 132-143, DOI: 10.1007/978-3-540-69828-9_13
+\begin_inset Newline newline
+\end_inset
+
+[2] Identifier mapping performance for integrating transcriptomics and proteomic
+s experimental results Roger S.
+ Day1, Kevin K.
+ McDade1, Uma Chandran1, Alex Lisovich, Thomas Conrads, Brian Hood, V.S.Kumar
+ Kolli, David Kirchner, Traci Litzi, G.
+ Larry Maxwell, in submission to BMC Bioinformatics 
+\end_layout
+
+\end_body
+\end_document

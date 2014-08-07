@@ -1,0 +1,1735 @@
+%!PS-Adobe-3.0 EPSF-3.0
+%%DocumentNeededResources: font Times-Roman
+%%+ font Times-Bold
+%%+ font Times-Italic
+%%+ font Times-BoldItalic
+%%+ font Symbol
+%%Title: R Graphics Output
+%%Creator: R Software
+%%Pages: (atend)
+%%BoundingBox: 0 0 1584 504
+%%EndComments
+%%BeginProlog
+/bp  { gs sRGB gs } def
+% begin .ps.prolog
+/gs  { gsave } bind def
+/gr  { grestore } bind def
+/ep  { showpage gr gr } bind def
+/m   { moveto } bind def
+/l  { rlineto } bind def
+/np  { newpath } bind def
+/cp  { closepath } bind def
+/f   { fill } bind def
+/o   { stroke } bind def
+/c   { newpath 0 360 arc } bind def
+/r   { 4 2 roll moveto 1 copy 3 -1 roll exch 0 exch rlineto 0 rlineto -1 mul 0 exch rlineto closepath } bind def
+/p1  { stroke } bind def
+/p2  { gsave bg fill grestore newpath } bind def
+/p3  { gsave bg fill grestore stroke } bind def
+/p6  { gsave bg eofill grestore newpath } bind def
+/p7  { gsave bg eofill grestore stroke } bind def
+/t   { 5 -2 roll moveto gsave rotate
+       1 index stringwidth pop
+       mul neg 0 rmoveto show grestore } bind def
+/ta  { 4 -2 roll moveto gsave rotate show } bind def
+/tb  { 2 -1 roll 0 rmoveto show } bind def
+/cl  { grestore gsave newpath 3 index 3 index moveto 1 index
+       4 -1 roll lineto  exch 1 index lineto lineto
+       closepath clip newpath } bind def
+/rgb { setrgbcolor } bind def
+/s   { scalefont setfont } bind def
+% end   .ps.prolog
+/sRGB { [ /CIEBasedABC
+          << /DecodeLMN
+               [ { dup 0.03928 le
+                        {12.92321 div}
+                        {0.055 add 1.055 div 2.4 exp }
+                     ifelse
+                 } bind dup dup
+               ]
+             /MatrixLMN [0.412457 0.212673 0.019334
+                         0.357576 0.715152 0.119192
+                         0.180437 0.072175 0.950301]
+             /WhitePoint [0.9505 1.0 1.0890]
+           >>
+         ] setcolorspace } bind def
+/srgb { setcolor } bind def
+%%IncludeResource: font Times-Roman
+/Times-Roman findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding ISOLatin1Encoding def
+  currentdict
+  end
+/Font1 exch definefont pop
+%%IncludeResource: font Times-Bold
+/Times-Bold findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding ISOLatin1Encoding def
+  currentdict
+  end
+/Font2 exch definefont pop
+%%IncludeResource: font Times-Italic
+/Times-Italic findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding ISOLatin1Encoding def
+  currentdict
+  end
+/Font3 exch definefont pop
+%%IncludeResource: font Times-BoldItalic
+/Times-BoldItalic findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding ISOLatin1Encoding def
+  currentdict
+  end
+/Font4 exch definefont pop
+%%IncludeResource: font Symbol
+/Symbol findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  currentdict
+  end
+/Font5 exch definefont pop
+%%EndProlog
+%%Page: 1 1
+bp
+0.00 0.00 1584.00 504.00 cl
+0.00 0.00 1584.00 504.00 cl
+0.00 0.00 1584.00 504.00 cl
+/bg { 1 1 1 srgb } def
+1 1 1 srgb
+1.06 setlinewidth
+[] 0 setdash
+1 setlinecap
+1 setlinejoin
+10.00 setmiterlimit
+0.00 0.00 1584.00 504.00 r p3
+0.00 0.00 1584.00 504.00 cl
+0.00 0.00 1584.00 504.00 cl
+0.00 0.00 1584.00 504.00 cl
+85.53 196.89 1569.60 489.60 cl
+/bg { 0.8980 0.8980 0.8980 srgb } def
+85.53 196.89 1484.07 292.71 r p2
+1 1 1 srgb
+1.06 setlinewidth
+[] 0 setdash
+0 setlinecap
+1 setlinejoin
+10.00 setmiterlimit
+np
+85.53 251.77 m
+1484.07 0 l
+o
+np
+85.53 343.24 m
+1484.07 0 l
+o
+np
+85.53 434.72 m
+1484.07 0 l
+o
+np
+92.94 196.89 m
+0 292.71 l
+o
+np
+105.29 196.89 m
+0 292.71 l
+o
+np
+117.63 196.89 m
+0 292.71 l
+o
+np
+129.98 196.89 m
+0 292.71 l
+o
+np
+142.33 196.89 m
+0 292.71 l
+o
+np
+154.67 196.89 m
+0 292.71 l
+o
+np
+167.02 196.89 m
+0 292.71 l
+o
+np
+179.37 196.89 m
+0 292.71 l
+o
+np
+191.71 196.89 m
+0 292.71 l
+o
+np
+204.06 196.89 m
+0 292.71 l
+o
+np
+216.41 196.89 m
+0 292.71 l
+o
+np
+228.75 196.89 m
+0 292.71 l
+o
+np
+241.10 196.89 m
+0 292.71 l
+o
+np
+253.45 196.89 m
+0 292.71 l
+o
+np
+265.79 196.89 m
+0 292.71 l
+o
+np
+278.14 196.89 m
+0 292.71 l
+o
+np
+290.49 196.89 m
+0 292.71 l
+o
+np
+302.83 196.89 m
+0 292.71 l
+o
+np
+315.18 196.89 m
+0 292.71 l
+o
+np
+327.53 196.89 m
+0 292.71 l
+o
+np
+339.87 196.89 m
+0 292.71 l
+o
+np
+352.22 196.89 m
+0 292.71 l
+o
+np
+364.57 196.89 m
+0 292.71 l
+o
+np
+376.91 196.89 m
+0 292.71 l
+o
+np
+389.26 196.89 m
+0 292.71 l
+o
+np
+401.61 196.89 m
+0 292.71 l
+o
+np
+413.95 196.89 m
+0 292.71 l
+o
+np
+426.30 196.89 m
+0 292.71 l
+o
+np
+438.65 196.89 m
+0 292.71 l
+o
+np
+450.99 196.89 m
+0 292.71 l
+o
+np
+463.34 196.89 m
+0 292.71 l
+o
+np
+475.69 196.89 m
+0 292.71 l
+o
+np
+488.03 196.89 m
+0 292.71 l
+o
+np
+500.38 196.89 m
+0 292.71 l
+o
+np
+512.73 196.89 m
+0 292.71 l
+o
+np
+525.07 196.89 m
+0 292.71 l
+o
+np
+537.42 196.89 m
+0 292.71 l
+o
+np
+549.77 196.89 m
+0 292.71 l
+o
+np
+562.11 196.89 m
+0 292.71 l
+o
+np
+574.46 196.89 m
+0 292.71 l
+o
+np
+586.81 196.89 m
+0 292.71 l
+o
+np
+599.15 196.89 m
+0 292.71 l
+o
+np
+611.50 196.89 m
+0 292.71 l
+o
+np
+623.85 196.89 m
+0 292.71 l
+o
+np
+636.19 196.89 m
+0 292.71 l
+o
+np
+648.54 196.89 m
+0 292.71 l
+o
+np
+660.89 196.89 m
+0 292.71 l
+o
+np
+673.23 196.89 m
+0 292.71 l
+o
+np
+685.58 196.89 m
+0 292.71 l
+o
+np
+697.93 196.89 m
+0 292.71 l
+o
+np
+710.27 196.89 m
+0 292.71 l
+o
+np
+722.62 196.89 m
+0 292.71 l
+o
+np
+734.97 196.89 m
+0 292.71 l
+o
+np
+747.31 196.89 m
+0 292.71 l
+o
+np
+759.66 196.89 m
+0 292.71 l
+o
+np
+772.01 196.89 m
+0 292.71 l
+o
+np
+784.35 196.89 m
+0 292.71 l
+o
+np
+796.70 196.89 m
+0 292.71 l
+o
+np
+809.05 196.89 m
+0 292.71 l
+o
+np
+821.39 196.89 m
+0 292.71 l
+o
+np
+833.74 196.89 m
+0 292.71 l
+o
+np
+846.09 196.89 m
+0 292.71 l
+o
+np
+858.43 196.89 m
+0 292.71 l
+o
+np
+870.78 196.89 m
+0 292.71 l
+o
+np
+883.13 196.89 m
+0 292.71 l
+o
+np
+895.47 196.89 m
+0 292.71 l
+o
+np
+907.82 196.89 m
+0 292.71 l
+o
+np
+920.17 196.89 m
+0 292.71 l
+o
+np
+932.51 196.89 m
+0 292.71 l
+o
+np
+944.86 196.89 m
+0 292.71 l
+o
+np
+957.21 196.89 m
+0 292.71 l
+o
+np
+969.55 196.89 m
+0 292.71 l
+o
+np
+981.90 196.89 m
+0 292.71 l
+o
+np
+994.25 196.89 m
+0 292.71 l
+o
+np
+1006.59 196.89 m
+0 292.71 l
+o
+np
+1018.94 196.89 m
+0 292.71 l
+o
+np
+1031.29 196.89 m
+0 292.71 l
+o
+np
+1043.63 196.89 m
+0 292.71 l
+o
+np
+1055.98 196.89 m
+0 292.71 l
+o
+np
+1068.33 196.89 m
+0 292.71 l
+o
+np
+1080.67 196.89 m
+0 292.71 l
+o
+np
+1093.02 196.89 m
+0 292.71 l
+o
+np
+1105.37 196.89 m
+0 292.71 l
+o
+np
+1117.71 196.89 m
+0 292.71 l
+o
+np
+1130.06 196.89 m
+0 292.71 l
+o
+np
+1142.41 196.89 m
+0 292.71 l
+o
+np
+1154.75 196.89 m
+0 292.71 l
+o
+np
+1167.10 196.89 m
+0 292.71 l
+o
+np
+1179.45 196.89 m
+0 292.71 l
+o
+np
+1191.79 196.89 m
+0 292.71 l
+o
+np
+1204.14 196.89 m
+0 292.71 l
+o
+np
+1216.49 196.89 m
+0 292.71 l
+o
+np
+1228.83 196.89 m
+0 292.71 l
+o
+np
+1241.18 196.89 m
+0 292.71 l
+o
+np
+1253.53 196.89 m
+0 292.71 l
+o
+np
+1265.87 196.89 m
+0 292.71 l
+o
+np
+1278.22 196.89 m
+0 292.71 l
+o
+np
+1290.57 196.89 m
+0 292.71 l
+o
+np
+1302.91 196.89 m
+0 292.71 l
+o
+np
+1315.26 196.89 m
+0 292.71 l
+o
+np
+1327.61 196.89 m
+0 292.71 l
+o
+np
+1339.95 196.89 m
+0 292.71 l
+o
+np
+1352.30 196.89 m
+0 292.71 l
+o
+np
+1364.65 196.89 m
+0 292.71 l
+o
+np
+1376.99 196.89 m
+0 292.71 l
+o
+np
+1389.34 196.89 m
+0 292.71 l
+o
+np
+1401.69 196.89 m
+0 292.71 l
+o
+np
+1414.03 196.89 m
+0 292.71 l
+o
+np
+1426.38 196.89 m
+0 292.71 l
+o
+np
+1438.73 196.89 m
+0 292.71 l
+o
+np
+1451.07 196.89 m
+0 292.71 l
+o
+np
+1463.42 196.89 m
+0 292.71 l
+o
+np
+1475.77 196.89 m
+0 292.71 l
+o
+np
+1488.11 196.89 m
+0 292.71 l
+o
+np
+1500.46 196.89 m
+0 292.71 l
+o
+np
+1512.81 196.89 m
+0 292.71 l
+o
+np
+1525.15 196.89 m
+0 292.71 l
+o
+np
+1537.50 196.89 m
+0 292.71 l
+o
+np
+1549.85 196.89 m
+0 292.71 l
+o
+np
+1562.19 196.89 m
+0 292.71 l
+o
+/bg { 0.3804 0.6118 1 srgb } def
+92.94 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+129.98 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+129.98 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+142.33 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+142.33 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+105.29 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+105.29 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+154.67 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+154.67 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+179.37 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+179.37 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+167.02 343.24 3.72 c p2
+265.79 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+265.79 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+204.06 343.24 3.72 c p2
+216.41 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+216.41 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+228.75 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+228.75 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+191.71 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+191.71 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+241.10 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+241.10 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+253.45 343.24 3.72 c p2
+327.53 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+327.53 434.72 3.72 c p2
+278.14 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+290.49 343.24 3.72 c p2
+339.87 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+339.87 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+364.57 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+364.57 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+315.18 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+315.18 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+352.22 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+352.22 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+302.83 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+302.83 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+413.95 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+413.95 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+389.26 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+389.26 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+401.61 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+401.61 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+426.30 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+426.30 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+438.65 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+438.65 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+450.99 343.24 3.72 c p2
+463.34 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+463.34 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+475.69 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+475.69 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+376.91 343.24 3.72 c p2
+488.03 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+488.03 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+500.38 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+500.38 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+512.73 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+512.73 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+525.07 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+525.07 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+697.93 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+697.93 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+772.01 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+772.01 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+685.58 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+685.58 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+549.77 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+549.77 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+710.27 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+710.27 434.72 3.72 c p2
+562.11 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+883.13 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+883.13 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+796.70 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+796.70 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+660.89 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+660.89 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+574.46 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+574.46 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+586.81 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+586.81 434.72 3.72 c p2
+784.35 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+611.50 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+611.50 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+636.19 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+636.19 434.72 3.72 c p2
+648.54 434.72 3.72 c p2
+673.23 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+821.39 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+821.39 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+846.09 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+809.05 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+870.78 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+870.78 434.72 3.72 c p2
+858.43 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+599.15 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+599.15 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+833.74 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+833.74 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+623.85 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+623.85 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+734.97 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+734.97 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+747.31 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+747.31 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+537.42 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+537.42 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+722.62 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+722.62 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+759.66 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+759.66 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+895.47 343.24 3.72 c p2
+907.82 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+907.82 434.72 3.72 c p2
+/bg { 0.9725 0.4627 0.4275 srgb } def
+920.17 251.77 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+920.17 343.24 3.72 c p2
+944.86 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+944.86 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+932.51 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+932.51 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+1018.94 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+1018.94 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+981.90 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+981.90 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+957.21 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+957.21 434.72 3.72 c p2
+/bg { 0.9725 0.4627 0.4275 srgb } def
+1031.29 251.77 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+1031.29 343.24 3.72 c p2
+969.55 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+969.55 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+1043.63 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+1043.63 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+1068.33 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+1068.33 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+1080.67 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+1080.67 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+1055.98 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+1055.98 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+1093.02 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+1093.02 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+1130.06 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+1130.06 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+1179.45 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+1179.45 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+1154.75 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+1154.75 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+1167.10 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+1167.10 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+1191.79 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+1191.79 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+1117.71 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+1117.71 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+1105.37 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+1105.37 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+1142.41 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+1142.41 434.72 3.72 c p2
+/bg { 0.9725 0.4627 0.4275 srgb } def
+1204.14 251.77 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+1204.14 343.24 3.72 c p2
+1352.30 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+1352.30 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+1339.95 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+1339.95 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+1327.61 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+1327.61 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+1265.87 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+1265.87 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+1278.22 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+1278.22 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+1401.69 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+1401.69 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+1302.91 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+1302.91 434.72 3.72 c p2
+1290.57 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+1389.34 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+1389.34 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+1253.53 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+1253.53 434.72 3.72 c p2
+1315.26 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+1414.03 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+1414.03 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+1376.99 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+1376.99 434.72 3.72 c p2
+1426.38 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+1364.65 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+1364.65 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+1216.49 343.24 3.72 c p2
+1438.73 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+1438.73 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+1228.83 343.24 3.72 c p2
+1451.07 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+1451.07 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+1463.42 343.24 3.72 c p2
+1512.81 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+1512.81 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+1500.46 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+1500.46 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+1488.11 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+1488.11 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+1525.15 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+1525.15 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+1537.50 343.24 3.72 c p2
+1549.85 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+1549.85 434.72 3.72 c p2
+/bg { 0 0.7294 0.2196 srgb } def
+1562.19 343.24 3.72 c p2
+/bg { 0.3804 0.6118 1 srgb } def
+1562.19 434.72 3.72 c p2
+/bg { 0.9725 0.4627 0.4275 srgb } def
+1475.77 251.77 3.72 c p2
+117.63 251.77 3.72 c p2
+994.25 251.77 3.72 c p2
+1006.59 251.77 3.72 c p2
+1241.18 251.77 3.72 c p2
+0.00 0.00 1584.00 504.00 cl
+0.00 0.00 1584.00 504.00 cl
+0.00 0.00 1584.00 504.00 cl
+/Font1 findfont 10 s
+0.4980 0.4980 0.4980 srgb
+78.44 248.46 (Gendoo) 1 0 t
+78.44 339.93 (gene2pubmed) 1 0 t
+78.44 431.41 (RBBH) 1 0 t
+0.00 0.00 1584.00 504.00 cl
+0.00 0.00 1584.00 504.00 cl
+0.4980 0.4980 0.4980 srgb
+1.06 setlinewidth
+[] 0 setdash
+0 setlinecap
+1 setlinejoin
+10.00 setmiterlimit
+np
+81.28 251.77 m
+4.25 0 l
+o
+np
+81.28 343.24 m
+4.25 0 l
+o
+np
+81.28 434.72 m
+4.25 0 l
+o
+0.00 0.00 1584.00 504.00 cl
+0.00 0.00 1584.00 504.00 cl
+0.00 0.00 1584.00 504.00 cl
+0.00 0.00 1584.00 504.00 cl
+0.00 0.00 1584.00 504.00 cl
+0.00 0.00 1584.00 504.00 cl
+0.4980 0.4980 0.4980 srgb
+1.06 setlinewidth
+[] 0 setdash
+0 setlinecap
+1 setlinejoin
+10.00 setmiterlimit
+np
+92.94 192.64 m
+0 4.25 l
+o
+np
+105.29 192.64 m
+0 4.25 l
+o
+np
+117.63 192.64 m
+0 4.25 l
+o
+np
+129.98 192.64 m
+0 4.25 l
+o
+np
+142.33 192.64 m
+0 4.25 l
+o
+np
+154.67 192.64 m
+0 4.25 l
+o
+np
+167.02 192.64 m
+0 4.25 l
+o
+np
+179.37 192.64 m
+0 4.25 l
+o
+np
+191.71 192.64 m
+0 4.25 l
+o
+np
+204.06 192.64 m
+0 4.25 l
+o
+np
+216.41 192.64 m
+0 4.25 l
+o
+np
+228.75 192.64 m
+0 4.25 l
+o
+np
+241.10 192.64 m
+0 4.25 l
+o
+np
+253.45 192.64 m
+0 4.25 l
+o
+np
+265.79 192.64 m
+0 4.25 l
+o
+np
+278.14 192.64 m
+0 4.25 l
+o
+np
+290.49 192.64 m
+0 4.25 l
+o
+np
+302.83 192.64 m
+0 4.25 l
+o
+np
+315.18 192.64 m
+0 4.25 l
+o
+np
+327.53 192.64 m
+0 4.25 l
+o
+np
+339.87 192.64 m
+0 4.25 l
+o
+np
+352.22 192.64 m
+0 4.25 l
+o
+np
+364.57 192.64 m
+0 4.25 l
+o
+np
+376.91 192.64 m
+0 4.25 l
+o
+np
+389.26 192.64 m
+0 4.25 l
+o
+np
+401.61 192.64 m
+0 4.25 l
+o
+np
+413.95 192.64 m
+0 4.25 l
+o
+np
+426.30 192.64 m
+0 4.25 l
+o
+np
+438.65 192.64 m
+0 4.25 l
+o
+np
+450.99 192.64 m
+0 4.25 l
+o
+np
+463.34 192.64 m
+0 4.25 l
+o
+np
+475.69 192.64 m
+0 4.25 l
+o
+np
+488.03 192.64 m
+0 4.25 l
+o
+np
+500.38 192.64 m
+0 4.25 l
+o
+np
+512.73 192.64 m
+0 4.25 l
+o
+np
+525.07 192.64 m
+0 4.25 l
+o
+np
+537.42 192.64 m
+0 4.25 l
+o
+np
+549.77 192.64 m
+0 4.25 l
+o
+np
+562.11 192.64 m
+0 4.25 l
+o
+np
+574.46 192.64 m
+0 4.25 l
+o
+np
+586.81 192.64 m
+0 4.25 l
+o
+np
+599.15 192.64 m
+0 4.25 l
+o
+np
+611.50 192.64 m
+0 4.25 l
+o
+np
+623.85 192.64 m
+0 4.25 l
+o
+np
+636.19 192.64 m
+0 4.25 l
+o
+np
+648.54 192.64 m
+0 4.25 l
+o
+np
+660.89 192.64 m
+0 4.25 l
+o
+np
+673.23 192.64 m
+0 4.25 l
+o
+np
+685.58 192.64 m
+0 4.25 l
+o
+np
+697.93 192.64 m
+0 4.25 l
+o
+np
+710.27 192.64 m
+0 4.25 l
+o
+np
+722.62 192.64 m
+0 4.25 l
+o
+np
+734.97 192.64 m
+0 4.25 l
+o
+np
+747.31 192.64 m
+0 4.25 l
+o
+np
+759.66 192.64 m
+0 4.25 l
+o
+np
+772.01 192.64 m
+0 4.25 l
+o
+np
+784.35 192.64 m
+0 4.25 l
+o
+np
+796.70 192.64 m
+0 4.25 l
+o
+np
+809.05 192.64 m
+0 4.25 l
+o
+np
+821.39 192.64 m
+0 4.25 l
+o
+np
+833.74 192.64 m
+0 4.25 l
+o
+np
+846.09 192.64 m
+0 4.25 l
+o
+np
+858.43 192.64 m
+0 4.25 l
+o
+np
+870.78 192.64 m
+0 4.25 l
+o
+np
+883.13 192.64 m
+0 4.25 l
+o
+np
+895.47 192.64 m
+0 4.25 l
+o
+np
+907.82 192.64 m
+0 4.25 l
+o
+np
+920.17 192.64 m
+0 4.25 l
+o
+np
+932.51 192.64 m
+0 4.25 l
+o
+np
+944.86 192.64 m
+0 4.25 l
+o
+np
+957.21 192.64 m
+0 4.25 l
+o
+np
+969.55 192.64 m
+0 4.25 l
+o
+np
+981.90 192.64 m
+0 4.25 l
+o
+np
+994.25 192.64 m
+0 4.25 l
+o
+np
+1006.59 192.64 m
+0 4.25 l
+o
+np
+1018.94 192.64 m
+0 4.25 l
+o
+np
+1031.29 192.64 m
+0 4.25 l
+o
+np
+1043.63 192.64 m
+0 4.25 l
+o
+np
+1055.98 192.64 m
+0 4.25 l
+o
+np
+1068.33 192.64 m
+0 4.25 l
+o
+np
+1080.67 192.64 m
+0 4.25 l
+o
+np
+1093.02 192.64 m
+0 4.25 l
+o
+np
+1105.37 192.64 m
+0 4.25 l
+o
+np
+1117.71 192.64 m
+0 4.25 l
+o
+np
+1130.06 192.64 m
+0 4.25 l
+o
+np
+1142.41 192.64 m
+0 4.25 l
+o
+np
+1154.75 192.64 m
+0 4.25 l
+o
+np
+1167.10 192.64 m
+0 4.25 l
+o
+np
+1179.45 192.64 m
+0 4.25 l
+o
+np
+1191.79 192.64 m
+0 4.25 l
+o
+np
+1204.14 192.64 m
+0 4.25 l
+o
+np
+1216.49 192.64 m
+0 4.25 l
+o
+np
+1228.83 192.64 m
+0 4.25 l
+o
+np
+1241.18 192.64 m
+0 4.25 l
+o
+np
+1253.53 192.64 m
+0 4.25 l
+o
+np
+1265.87 192.64 m
+0 4.25 l
+o
+np
+1278.22 192.64 m
+0 4.25 l
+o
+np
+1290.57 192.64 m
+0 4.25 l
+o
+np
+1302.91 192.64 m
+0 4.25 l
+o
+np
+1315.26 192.64 m
+0 4.25 l
+o
+np
+1327.61 192.64 m
+0 4.25 l
+o
+np
+1339.95 192.64 m
+0 4.25 l
+o
+np
+1352.30 192.64 m
+0 4.25 l
+o
+np
+1364.65 192.64 m
+0 4.25 l
+o
+np
+1376.99 192.64 m
+0 4.25 l
+o
+np
+1389.34 192.64 m
+0 4.25 l
+o
+np
+1401.69 192.64 m
+0 4.25 l
+o
+np
+1414.03 192.64 m
+0 4.25 l
+o
+np
+1426.38 192.64 m
+0 4.25 l
+o
+np
+1438.73 192.64 m
+0 4.25 l
+o
+np
+1451.07 192.64 m
+0 4.25 l
+o
+np
+1463.42 192.64 m
+0 4.25 l
+o
+np
+1475.77 192.64 m
+0 4.25 l
+o
+np
+1488.11 192.64 m
+0 4.25 l
+o
+np
+1500.46 192.64 m
+0 4.25 l
+o
+np
+1512.81 192.64 m
+0 4.25 l
+o
+np
+1525.15 192.64 m
+0 4.25 l
+o
+np
+1537.50 192.64 m
+0 4.25 l
+o
+np
+1549.85 192.64 m
+0 4.25 l
+o
+np
+1562.19 192.64 m
+0 4.25 l
+o
+0.00 0.00 1584.00 504.00 cl
+0.00 0.00 1584.00 504.00 cl
+/Font1 findfont 10 s
+0.4980 0.4980 0.4980 srgb
+2.58 90.08 (Agrobacterium T) 45.00 ta
+-0.450 (umef) tb
+-0.100 (aciens K84) tb gr
+109.97 185.12 (Ailuropoda melanoleuca) 1 45.00 t
+122.31 185.12 (Anabaena) 1 45.00 t
+134.66 185.12 (Anolis carolinensis) 1 45.00 t
+62.16 100.27 (Anopheles g) 45.00 ta
+-0.050 (ambiae str. PEST) tb gr
+159.35 185.12 (Apis mellifera) 1 45.00 t
+171.70 185.12 (Arabidopsis thaliana) 1 45.00 t
+95.85 96.92 (Asper) 45.00 ta
+-0.180 (gillus nidulans FGSC A4) tb gr
+196.39 185.12 (Bacillus subtilis Bsn5) 1 45.00 t
+208.74 185.12 (Bacillus subtilis subsp. spizizenii str. 168) 1 45.00 t
+83.27 47.30 (Bacillus subtilis subsp. spizizenii str. R) 45.00 ta
+-0.400 (O-NN-1) tb gr
+233.43 185.12 (Bacillus subtilis subsp. spizizenii str. TU-B-10) 1 45.00 t
+245.78 185.12 (Bacillus subtilis subsp. spizizenii str. W23) 1 45.00 t
+258.13 185.12 (Bos taurus) 1 45.00 t
+270.47 185.12 (Branchiostoma floridae) 1 45.00 t
+282.82 185.12 (Caenorhabditis briggsae) 1 45.00 t
+229.38 119.33 (Caenorhabditis ele) 45.00 ta
+-0.150 (g) tb
+-0.050 (ans) tb gr
+307.51 185.12 (Caenorhabditis remani) 1 45.00 t
+319.86 185.12 (Callithrix jacchus) 1 45.00 t
+332.21 185.12 (Candida albicans SC5314) 1 45.00 t
+299.57 140.14 (Canis f) 45.00 ta
+-0.100 (amiliaris) tb gr
+312.71 140.93 (Ca) 45.00 ta
+-0.200 (via porcellus) tb gr
+369.25 185.12 (Ciona intestinalis) 1 45.00 t
+381.59 185.12 (Danio rerio) 1 45.00 t
+329.92 121.10 (Dick) 45.00 ta
+-0.100 (e) tb
+-0.150 (ya dadantii 3937) tb gr
+406.29 185.12 (Dictyostelium discoideum AX4) 1 45.00 t
+418.63 185.12 (Drosophila ananassae) 1 45.00 t
+430.98 185.12 (Drosophila eracta) 1 45.00 t
+443.33 185.12 (Drosophila grimshawi) 1 45.00 t
+384.78 114.23 (Drosophila melanog) 45.00 ta
+-0.050 (aster) tb gr
+403.01 120.11 (Drosophila moja) 45.00 ta
+-0.200 (v) tb
+-0.150 (ensis) tb gr
+480.37 185.12 (Drosophila persimilis) 1 45.00 t
+492.71 185.12 (Drosophila sechellia) 1 45.00 t
+505.06 185.12 (Drosophila simulans) 1 45.00 t
+517.41 185.12 (Drosophila virllis) 1 45.00 t
+529.75 185.12 (Drosophila yakuba) 1 45.00 t
+542.10 185.12 (Equus caballus) 1 45.00 t
+554.45 185.12 (Escherichia coli 536) 1 45.00 t
+566.79 185.12 (Escherichia coli 55989) 1 45.00 t
+579.14 185.12 (Escherichia coli APEC 01) 1 45.00 t
+591.49 185.12 (Escherichia coli B str. REL606) 1 45.00 t
+603.83 185.12 (Escherichia coli BW2952) 1 45.00 t
+616.18 185.12 (Escherichia coli E24377A) 1 45.00 t
+628.53 185.12 (Escherichia coli ED1a) 1 45.00 t
+640.87 185.12 (Escherichia coli HS) 1 45.00 t
+653.22 185.12 (Escherichia coli IAI1) 1 45.00 t
+665.57 185.12 (Escherichia coli IAI39) 1 45.00 t
+605.25 112.46 (Escherichia coli K) 45.00 ta
+-0.300 (O11FL) tb gr
+690.26 185.12 (Escherichia coli O103:H2 str. 12009) 1 45.00 t
+702.61 185.12 (Escherichia coli O111:H- str. 11128) 1 45.00 t
+714.95 185.12 (Escherichia coli O127:H6 str. 2348_69) 1 45.00 t
+727.30 185.12 (Escherichia coli O157:H7 Sakai) 1 45.00 t
+739.65 185.12 (Escherichia coli O157:H7 str. EC4115) 1 45.00 t
+751.99 185.12 (Escherichia coli O157:H7 str. EDL933) 1 45.00 t
+764.34 185.12 (Escherichia coli O157:H7 str. TW14359) 1 45.00 t
+776.69 185.12 (Escherichia coli O26:H11 str. 11368) 1 45.00 t
+789.03 185.12 (Escherichia coli O26:H7 str. CB9615) 1 45.00 t
+801.38 185.12 (Escherichia coli S88) 1 45.00 t
+813.73 185.12 (Escherichia coli SE11) 1 45.00 t
+826.07 185.12 (Escherichia coli SMS-3-5) 1 45.00 t
+838.42 185.12 (Escherichia coli str K-12 substr. DH10B) 1 45.00 t
+850.77 185.12 (Escherichia coli str K-12 substr. MG1655) 1 45.00 t
+863.11 185.12 (Escherichia coli UMN026) 1 45.00 t
+875.46 185.12 (Escherichia coli UTI89) 1 45.00 t
+887.81 185.12 (Esicherichia coli CFT073) 1 45.00 t
+863.03 148.00 (Gallus g) 45.00 ta
+-0.050 (allus) tb gr
+912.50 185.12 (Glycine max) 1 45.00 t
+924.85 185.12 (Homo sapiens) 1 45.00 t
+937.19 185.12 (Leishmania major strain Friedlin) 1 45.00 t
+949.54 185.12 (Loxodonta africana) 1 45.00 t
+961.89 185.12 (Macaca mulatta) 1 45.00 t
+974.23 185.12 (Medicago truncatula) 1 45.00 t
+928.65 127.19 (Meleagris g) 45.00 ta
+-0.050 (allopa) tb
+-0.200 (v) tb
+-0.200 (o) tb gr
+998.93 185.12 (Mesorhizobium) 1 45.00 t
+976.31 150.16 (Miyak) 45.00 ta
+-0.100 (ogusa) tb gr
+1023.62 185.12 (Monodelphis domestica) 1 45.00 t
+1035.97 185.12 (Mus musculus) 1 45.00 t
+982.92 119.73 (Normascus leucogen) 45.00 ta
+-0.150 (ys) tb gr
+1060.66 185.12 (Oreochromis niloticus) 1 45.00 t
+999.75 111.86 (Ornithorh) 45.00 ta
+-0.050 (ynchus anatinus) tb gr
+1085.35 185.12 (Oryctolagus cuniculus) 1 45.00 t
+1035.65 123.07 (Oryza sativ) 45.00 ta
+-0.250 (a Japonica) tb gr
+1065.85 140.93 (P) 45.00 ta
+-0.150 (an troglodytes) tb gr
+1040.69 103.41 (Plasmodium f) 45.00 ta
+-0.100 (alciparum 3D7) tb gr
+1134.74 185.12 (Pongo abelii) 1 45.00 t
+1147.09 185.12 (Populus trichocarpa) 1 45.00 t
+1159.43 185.12 (Pseudomonas aeruginosa LESB58) 1 45.00 t
+1086.15 99.49 (Pseudomonas aeruginosa P) 45.00 ta
+-0.920 (A7) tb gr
+1093.39 94.38 (Pseudomonas aeruginosa P) 45.00 ta
+-0.920 (A) tb
+-0.550 (O1) tb gr
+1080.92 69.56 (Pseudomonas aeruginosa UCBPP-P) 45.00 ta
+-0.920 (A14) tb gr
+1157.95 134.25 (Rattus norv) 45.00 ta
+-0.150 (e) tb
+-0.150 (gicus) tb gr
+1127.70 91.65 (Saccharomyces cere) 45.00 ta
+-0.250 (visiae S288c) tb gr
+1233.51 185.12 (Schizosaccharomyces pombe 972h-) 1 45.00 t
+1217.96 157.22 (Silkw) 45.00 ta
+-0.100 (orm) tb gr
+1152.35 79.27 (Staph) 45.00 ta
+-0.050 (ylococcus aureus aureus RF122) tb gr
+1150.17 64.74 (Staph) 45.00 ta
+-0.050 (ylococcus aureus subsp. aureus COL) tb gr
+1160.16 62.38 (Staph) 45.00 ta
+-0.050 (ylococcus aureus subsp. aureus ED98) tb gr
+1172.11 61.98 (Staph) 45.00 ta
+-0.050 (ylococcus aureus subsp. aureus M013) tb gr
+1170.70 48.23 (Staph) 45.00 ta
+-0.050 (ylococcus aureus subsp. aureus MRSA252) tb gr
+1179.52 44.70 (Staph) 45.00 ta
+-0.050 (ylococcus aureus subsp. aureus MSHR1132) tb gr
+1196.18 49.02 (Staph) 45.00 ta
+-0.050 (ylococcus aureus subsp. aureus MSSA476) tb gr
+1225.03 65.52 (Staph) 45.00 ta
+-0.050 (ylococcus aureus subsp. aureus Mu3) tb gr
+1233.84 61.98 (Staph) 45.00 ta
+-0.050 (ylococcus aureus subsp. aureus Mu50) tb gr
+1246.59 62.38 (Staph) 45.00 ta
+-0.050 (ylococcus aureus subsp. aureus MW2) tb gr
+1259.72 63.17 (Staph) 45.00 ta
+-0.050 (ylococcus aureus subsp. aureus N315) tb gr
+1262.25 53.35 (Staph) 45.00 ta
+-0.050 (ylococcus aureus subsp. aureus Ne) tb
+-0.250 (wman) tb gr
+1245.12 23.87 (Staph) 45.00 ta
+-0.050 (ylococcus aureus subsp. aureus USA300_FPR3757) tb gr
+1255.90 22.31 (Staph) 45.00 ta
+-0.050 (ylococcus aureus subsp. aureus USA300_TCH1516) tb gr
+1307.92 61.98 (Staph) 45.00 ta
+-0.050 (ylococcus aureus subsp. aureus VC40) tb gr
+1443.41 185.12 (Streptomyces coelicolor A3\(2\)) 1 45.00 t
+1455.75 185.12 (Strongylocentrotus purpuratus) 1 45.00 t
+1438.84 155.86 (Sus scrof) 45.00 ta
+-0.100 (a) tb gr
+1439.99 144.66 (Synechoc) 45.00 ta
+-0.150 (ystis) tb gr
+1436.43 128.76 (T) 45.00 ta
+-0.800 (aeniop) tb
+-0.100 (ygia guttata) tb gr
+1430.89 110.87 (T) 45.00 ta
+-0.800 (oxoplasma gondii ME49) tb gr
+1369.02 36.66 (T) 45.00 ta
+-0.350 (rypanosoma brucei brucei strain 927_4 GUT) tb
+-0.800 (at10.1) tb gr
+1492.32 147.61 (V) 45.00 ta
+-0.600 (itis vinifera) tb gr
+1498.78 141.72 (Xenopus lae) 45.00 ta
+-0.250 (vis) tb gr
+1554.53 185.12 (Xenopus tropicalis) 1 45.00 t
+1566.87 185.12 (Zea mays) 1 45.00 t
+0.00 0.00 1584.00 504.00 cl
+0.00 0.00 1584.00 504.00 cl
+0.00 0.00 1584.00 504.00 cl
+0.00 0.00 1584.00 504.00 cl
+0.00 0.00 1584.00 504.00 cl
+/Font1 findfont 12 s
+0 0 0 srgb
+792.40 10.80 (120 or) 0 ta
+-0.216 (g) tb
+-0.060 (anisms) tb gr
+0.00 0.00 1584.00 504.00 cl
+0.00 0.00 1584.00 504.00 cl
+/Font1 findfont 12 s
+0 0 0 srgb
+18.74 343.24 (Source Databases) .5 90 t
+0.00 0.00 1584.00 504.00 cl
+0.00 0.00 1584.00 504.00 cl
+0.00 0.00 1584.00 504.00 cl
+0.00 0.00 1584.00 504.00 cl
+ep
+%%Trailer
+%%Pages: 1
+%%EOF

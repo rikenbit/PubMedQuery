@@ -1,0 +1,13 @@
+Package: DAVIDQuery
+Type: Package
+Title: Retrieval from the DAVID bioinformatics data resource into R
+Version: 1.24.0
+Date: 2010-06-10
+Author: Roger Day, Alex Lisovich
+Maintainer: Roger Day <day01@pitt.edu>
+Description: Tools to retrieve data from DAVID, the Database for Annotation, Visualization and Integrated Discovery
+Depends: RCurl (>= 1.4.0), utils
+biocViews: Annotation
+License: GPL-2
+LazyLoad: yes
+Packaged: 2014-04-12 05:49:57 UTC; biocbuild

@@ -1,0 +1,12 @@
+Package: meshr
+Title: Tools for conducting enrichment analysis of MeSH
+Description: A set of annotation maps describing the entire MeSH assembled using data from MeSH
+Version: 0.99.0
+Author: Itoshi Nikaido, Koki Tsuyuzaki, Gota Morota
+Maintainer: Koki Tsuyuzaki <k.t.the-answer@hotmail.co.jp>
+Depends: R (>= 3.0.1), fdrtool, Category, BiocGenerics, methods, cummeRbund, org.Hs.eg.db, MeSH.db, MeSH.AOR.db, MeSH.PCR.db, MeSHDbi, org.MeSH.Hsa.db, org.MeSH.Aca.db, org.MeSH.Atu.K84.db, org.MeSH.Bsu.168.db, org.MeSH.Syn.db
+Imports: 
+Suggests:
+License: Artistic-2.0
+biocViews: AnnotationData, FunctionalAnnotation, Bioinformatics, Statistics, Annotation, MultipleComparisons
+Packaged: 2014-02-02 13:00:11 UTC; miyazakilab

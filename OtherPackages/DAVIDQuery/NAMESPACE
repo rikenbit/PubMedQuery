@@ -1,0 +1,2 @@
+exportPattern("^[[:alpha:]]+")
+importFrom(utils, data, menu, read.delim, select.list)
